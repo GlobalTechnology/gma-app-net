@@ -1,0 +1,72 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+gcm_app
+</name>
+</assembly>
+<members>
+<member name="F:gcm_app._default.form1">
+	<summary>
+form1 control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:gcm_app._default.hf_proxyticket">
+	<summary>
+hf_proxyticket control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="P:gcm_app.My.MyWebExtension.Computer">
+	<summary>
+ Returns information about the host computer.
+ </summary>
+</member><member name="P:gcm_app.My.MyWebExtension.User">
+	<summary>
+ Returns information for the current Web user.
+ </summary>
+</member><member name="P:gcm_app.My.MyWebExtension.Request">
+	<summary>
+ Returns Request object.
+ </summary>
+</member><member name="P:gcm_app.My.MyWebExtension.Response">
+	<summary>
+ Returns Response object.
+ </summary>
+</member><member name="P:gcm_app.My.MyWebExtension.Log">
+	<summary>
+ Returns the Asp log object.
+ </summary>
+</member><member name="T:gcm_app.My.MyWebExtension">
+	<summary>
+ Module used to define the properties that are available in the My Namespace for Web projects.
+ </summary>
+	<remarks></remarks>
+</member><member name="M:gcm_app.theKeyProxyTicket.PGTCallBack.#ctor">
+	<remarks/>
+</member><member name="E:gcm_app.theKeyProxyTicket.PGTCallBack.RetrievePGTCallbackCompleted">
+	<remarks/>
+</member><member name="M:gcm_app.theKeyProxyTicket.PGTCallBack.RetrievePGTCallback(System.String,System.String,System.String)">
+	<remarks/>
+</member><member name="M:gcm_app.theKeyProxyTicket.PGTCallBack.RetrievePGTCallbackAsync(System.String,System.String,System.String)">
+	<remarks/>
+</member><member name="M:gcm_app.theKeyProxyTicket.PGTCallBack.RetrievePGTCallbackAsync(System.String,System.String,System.String,System.Object)">
+	<remarks/>
+</member><member name="M:gcm_app.theKeyProxyTicket.PGTCallBack.CancelAsync(System.Object)">
+	<remarks/>
+</member><member name="T:gcm_app.theKeyProxyTicket.PGTCallBack">
+	<remarks/>
+</member><member name="T:gcm_app.theKeyProxyTicket.RetrievePGTCallbackCompletedEventHandler">
+	<remarks/>
+</member><member name="P:gcm_app.theKeyProxyTicket.RetrievePGTCallbackCompletedEventArgs.Result">
+	<remarks/>
+</member><member name="T:gcm_app.theKeyProxyTicket.RetrievePGTCallbackCompletedEventArgs">
+	<remarks/>
+</member>
+</members>
+</doc>

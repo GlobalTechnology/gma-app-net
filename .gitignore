@@ -41,3 +41,10 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
+
+gcm_app/Web.config
+gcm_app/Web.Debug.config
+gcm_app/Web.Release.config
+packages/
+gcm_app/Scripts/i18n/
+gcm_app/obj/
