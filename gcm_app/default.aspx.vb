@@ -5,7 +5,8 @@ Public Class _default
     Inherits System.Web.UI.Page
     Private Const Cashost As String = "https://thekey.me/cas/"
     Dim _service As String = ""
-    Dim target_service = "http://localhost:52195/api/measurements/token"
+    ' Dim target_service = "http://localhost:52195/api/measurements/token"
+    Dim target_service = "https://stage.sbr.global-registry.org/api/measurements/token"
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
 

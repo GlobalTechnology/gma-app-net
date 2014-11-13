@@ -7,7 +7,7 @@
                 var sw = bounds.getSouthWest();
                 var ne = bounds.getNorthEast();
 
-                this._apiResourceUrl = "http://localhost:52195/api/measurements/churches" + "?token=" + session_ticket + "&lat_min=" + sw.lat() + "&lat_max=" + ne.lat() + "&long_min=" + sw.lng() + "&long_max=" +ne.lng() + extras;
+                this._apiResourceUrl = _api_url + "/churches" + "?token=" + session_ticket + "&lat_min=" + sw.lat() + "&lat_max=" + ne.lat() + "&long_min=" + sw.lng() + "&long_max=" + ne.lng() + extras;
                 console.log(this._apiResourceUrl);
               
 

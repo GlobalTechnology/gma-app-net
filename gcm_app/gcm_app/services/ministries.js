@@ -3,7 +3,7 @@
     var ministry_service = function ($http) {
 
         var getMinistries = function (session_ticket) {
-            this._apiResourceUrl = "http://localhost:52195/api/measurements/ministries" + "?token=" + session_ticket;
+            this._apiResourceUrl = _api_url + "/ministries" + "?token=" + session_ticket;
 
 
 
@@ -15,7 +15,7 @@
                 });
         }
         var getMinistry = function (session_ticket, id) {
-            this._apiResourceUrl = "http://localhost:52195/api/measurements/ministries/" + id + "?token=" + session_ticket;
+            this._apiResourceUrl = _api_url + "/ministries/" + id + "?token=" + session_ticket;
 
 
 

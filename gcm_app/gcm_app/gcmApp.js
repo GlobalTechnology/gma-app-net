@@ -24,3 +24,5 @@ app.config(function ($routeProvider, $httpProvider) {
        })
        .otherwise({ redirectTo: "/map" });
 });
+//var _api_url = 'http://localhost:52195/api/measurements';
+var _api_url = 'https://stage.sbr.global-registry.org/api/measurements';

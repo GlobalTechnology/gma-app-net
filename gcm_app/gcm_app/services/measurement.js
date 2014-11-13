@@ -3,7 +3,7 @@
     var measurement_service = function ($http) {
 
         var getMeasurements = function (session_ticket, ministry_id, period, mcc) {
-            this._apiResourceUrl = "http://localhost:52195/api/measurements/measurements" + "?token=" + session_ticket + "&ministry_id=" + ministry_id + "&period=" + period + "&mcc=" + mcc;
+            this._apiResourceUrl = _api_url + "/measurements" + "?token=" + session_ticket + "&ministry_id=" + ministry_id + "&period=" + period + "&mcc=" + mcc;
             console.log(this._apiResourceUrl);
             return $http.get(this._apiResourceUrl, { withCredentials: true })
                 .then(function (response) {
@@ -14,7 +14,7 @@
         }
 
         var getMeasurementDetail = function (session_ticket, id, ministry_id, period, mcc) {
-            this._apiResourceUrl = "http://localhost:52195/api/measurements/measurements/" + id + "?token=" + session_ticket + "&ministry_id=" + ministry_id + "&period=" + period + "&mcc=" + mcc;
+            this._apiResourceUrl = _api_url + "/measurements/" + id + "?token=" + session_ticket + "&ministry_id=" + ministry_id + "&period=" + period + "&mcc=" + mcc;
             console.log(this._apiResourceUrl);
             return $http.get(this._apiResourceUrl, { withCredentials: true })
                .then(function (response) {
@@ -25,7 +25,7 @@
         }
 
         //var saveMeasurement = function (session_ticket, id, related_entity_id, period, mcc, value) {
-        //    this._apiResourceUrl = "http://localhost:52195/api/measurements/measurements/" + id + "?token=" + session_ticket;
+        //    this._apiResourceUrl =_api_url + "/measurements/" + id + "?token=" + session_ticket;
         //    var put_data = {period: period, related_entity_id: related_entity_id, period: period, value:value, mcc: mcc};
 
 
@@ -39,7 +39,7 @@
         //}
         var saveMeasurement = function (session_ticket, values) {
 
-            this._apiResourceUrl = "http://localhost:52195/api/measurements/measurements/?token=" + session_ticket;
+            this._apiResourceUrl = _api_url + "/measurements/?token=" + session_ticket;
            // var put_data = { period: period, related_entity_id: related_entity_id, period: period, value: value, mcc: mcc };
 
 

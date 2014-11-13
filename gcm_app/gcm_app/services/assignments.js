@@ -3,7 +3,7 @@
     var assignment_service = function ($http) {
 
         var getAssignments = function (session_ticket) {
-            this._apiResourceUrl = "http://localhost:52195/api/measurements/assignments" + "?token=" + session_ticket;
+            this._apiResourceUrl = _api_url + "/assignments" + "?token=" + session_ticket;
 
             console.log(this._apiResourceUrl);
             return $http.get(this._apiResourceUrl, { withCredentials: true })
@@ -14,7 +14,7 @@
                 });
         }
         var getAssignment = function (session_ticket, assignmnet_id) {
-            this._apiResourceUrl = "http://localhost:52195/api/measurements/assignments/"+ assignmnet_id + "?token=" + session_ticket;
+            this._apiResourceUrl = _api_url + "/assignments/" + assignmnet_id + "?token=" + session_ticket;
 
             
 
@@ -26,7 +26,7 @@
                 });
         }
         var saveAssignment = function (session_ticket, assignmnet_id, role) {
-            this._apiResourceUrl = "http://localhost:52195/api/measurements/assignments/" + assignmnet_id + "?token=" + session_ticket;
+            this._apiResourceUrl = _api_url + "/assignments/" + assignmnet_id + "?token=" + session_ticket;
             var input = { team_role: role };
 
 
@@ -38,7 +38,7 @@
                 });
         }
         var addTeamMember = function (session_ticket, newTeamMember) {
-            this._apiResourceUrl = "http://localhost:52195/api/measurements/assignments" + "?token=" + session_ticket;
+            this._apiResourceUrl = _api_url + "/assignments" + "?token=" + session_ticket;
           
 
             return $http.post(this._apiResourceUrl, newTeamMember, { withCredentials: true })
