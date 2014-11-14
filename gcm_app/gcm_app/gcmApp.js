@@ -22,6 +22,10 @@ app.config(function ($routeProvider, $httpProvider) {
            templateUrl: "/gcm_app/partials/admin.html",
            controller: "adminController"
        })
+         .when("/church", {
+             templateUrl: "/gcm_app/partials/church.html",
+             controller: "churchController"
+         })
        .otherwise({ redirectTo: "/map" });
 });
 //var _api_url = 'http://localhost:52195/api/measurements';

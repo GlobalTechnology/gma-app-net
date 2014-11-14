@@ -124,10 +124,12 @@
     <Content Include="gcm_app\controllers\gcmMapCtrl.js" />
     <Content Include="gcm_app\controllers\gcmCtrl-old.js" />
     <Content Include="gcm_app\controllers\adminCtrl.js" />
+    <Content Include="gcm_app\controllers\churchCtrl.js" />
     <Content Include="gcm_app\controllers\measurementsCtrl.js" />
     <Content Include="gcm_app\controllers\trainingCtrl.js" />
     <Content Include="gcm_app\controllers\mapCtrl.js" />
     <Content Include="gcm_app\partials\admin.html" />
+    <Content Include="gcm_app\partials\church.html" />
     <Content Include="gcm_app\partials\measurements.html" />
     <Content Include="gcm_app\partials\training.html" />
     <Content Include="gcm_app\partials\map.html" />

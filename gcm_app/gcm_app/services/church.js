@@ -8,6 +8,13 @@
                 var ne = bounds.getNorthEast();
 
                 this._apiResourceUrl = _api_url + "/churches" + "?token=" + session_ticket + "&lat_min=" + sw.lat() + "&lat_max=" + ne.lat() + "&long_min=" + sw.lng() + "&long_max=" + ne.lng() + extras;
+            }
+            else
+            {
+                this._apiResourceUrl = _api_url + "/churches" + "?token=" + session_ticket + extras;
+
+            }
+
                 console.log(this._apiResourceUrl);
               
 
@@ -17,7 +24,7 @@
                         return response.data;
 
                     });
-            }
+           
         }
 
 

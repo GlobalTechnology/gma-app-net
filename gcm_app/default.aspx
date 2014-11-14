@@ -71,10 +71,10 @@
 
                 <div>
                     <ul class="nav nav-tabs" role="tablist" id="myTab" class="map-ministries">
-                        <li class="active"><a href="#/map" data-target="#">Map</a></li>
-                        <li><a href="#/measurements" data-target="#">Measurements</a></li>
+                        <li class="active"><a href="#/map" data-target="#">Church</a></li>
                         <li><a href="#/training" data-target="#" ng-show="assignment.team_role === 'leader' || assignment.team_role === 'inherited_leader'">Training</a></li>
-                        <li><a href="#/admin" data-target="#" ng-show="assignment.team_role === 'leader' || assignment.team_role === 'inherited_leader'">Admin</a></li>
+                        <li><a href="#/measurements" data-target="#">Measurements</a></li>
+                         <li><a href="#/admin" data-target="#" ng-show="assignment.team_role === 'leader' || assignment.team_role === 'inherited_leader'">Admin</a></li>
                     </ul>
 
                     <!-- Example row of columns -->
@@ -178,6 +178,7 @@
         <script src="gcm_app/services/measurement.js"></script>
         <script src="gcm_app/services/ministries.js"></script>
         <script src="gcm_app/services/assignments.js"></script>
+        <script src="gcm_app/controllers/churchCtrl.js"></script>
         <script src="gcm_app/services/token.js"></script>
         <script src="Scripts/angular-ui/ui-bootstrap.min.js"></script>
         <script src="Scripts/angular-ui/ui-bootstrap-tpls.min.js"></script>

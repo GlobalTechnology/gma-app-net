@@ -232,6 +232,23 @@
                         <table class="table table-striped">
                             <tr>
                                 <th colspan="2">
+                                    {{assignment.name}}(Local) :
+                                </th>
+                            </tr>
+                            <tr>
+                                <td class="meas_table_lbl">Churches</td>
+                                <td>
+                                    23
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="meas_table_lbl">Local</td>
+                                <td>
+                                    <input id="tbLocal" type="number" class="form-control" placeholder="Local" ng-model="edit_measurement.details.local[current_period]" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <th colspan="2">
                                     Ministries/Teams:
                                 </th>
                             </tr>

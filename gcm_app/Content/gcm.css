@@ -36,7 +36,14 @@
     overflow: hidden;
     display: none;
 }
-
+.church-mode{
+    position: absolute;
+    padding: 0 5px;
+    z-index: 999;
+}
+.church-grid img{
+    height: 25px;
+}
 .map-legend {
    /*height: 200px;*/
     bottom: 0;
