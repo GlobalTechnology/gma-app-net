@@ -3,7 +3,7 @@
     //Find existing Module instance named 'gcmApp'
     var app = angular.module("gcmApp");
 
-    var map_controller = function ($scope, $document, church_service) {
+    var map_controller = function ($scope, $document,$compile, church_service) {
         $scope.$parent.is_loaded = false;
         $scope.show_target_point = true;
         $scope.show_group = true;
@@ -12,6 +12,8 @@
         $scope.show_lines = true;
         $scope.show_jf = true;
         $scope.map_filter = 'min_only';
+        $scope.icon_add_mode = false;
+        $scope.new_church = {};
         setTimeout(initialize, 0);
 
 
@@ -20,8 +22,8 @@
         function initialize() {
 
             $scope.map = new google.maps.Map(document.getElementById('map_canvas'), $scope.mapOptions);
+            $scope.map.setOptions({ draggableCursor: '' });
 
-          
             google.maps.event.addListener($scope.map, "idle", function () {
                 $scope.$parent.is_loaded = true;
                 if (typeof $scope.user.session_ticket !== 'undefined')
@@ -34,8 +36,13 @@
             $scope.church = { name: "" };
 
             $scope.churchWindowContent = $('#church_window')[0].innerHTML;// "<div class='church-window'><h3>{{name}}</h3></div>";
-          
+
             $scope.churchWindow = new google.maps.InfoWindow({ content: $scope.churchWindowContent });
+            $scope.newChurchWindow = new google.maps.InfoWindow();
+            var content = '<div id="new_church_window_content" ng-include src="\'/gcm_app/partials/new_church_window.html\'"></div>';
+            console.log(content);
+            $scope.newChurchWindowContent = $compile(content)($scope);
+            console.log($scope.newChurchWindowContent);
 
             $scope.map.church_lines = [];
             $scope.map.icons = {};
@@ -60,7 +67,13 @@
             $scope.map.side = document.getElementById('side');
             $scope.map.side.index = -1;
             $scope.map.side.style.display = 'block';
+            $scope.map.search = document.getElementById('map_controls');
+            $scope.map.search.index = 3;
+            $scope.map.search.style.display = 'block';
+
             $scope.map.controls[google.maps.ControlPosition.TOP_RIGHT].push($scope.map.side);
+            $scope.map.controls[google.maps.ControlPosition.TOP_LEFT].push($scope.map.search);
+
 
         }
 
@@ -76,7 +89,7 @@
                 if ($scope.map_filter === 'min_only') extras += '&ministry_id=' + $scope.assignment.ministry_id;
                 else if ($scope.map_filter === 'tree') extras += '&ministry_id=' + $scope.assignment.ministry_id + '&show_tree=true';
 
-               
+
 
 
                 church_service.getChurches($scope.user.session_ticket, $scope.map.getBounds(), extras).then($scope.onGetChurches, $scope.onError);
@@ -134,9 +147,86 @@
 
 
 
+        $scope.addChurch = function () {
+            angular.forEach($scope.map.markers, function (m) {
 
+                if (m.id == -1) {
+                    $scope.new_church.ministry_id = $scope.assignment.ministry_id;
 
+                    $scope.new_church.latitude = m.getPosition().lat();
+                    $scope.new_church.longitude = m.getPosition().lng();
+                    console.log($scope.new_church)
+                    church_service.addChurch($scope.user.session_ticket, $scope.new_church).then($scope.onAddChurch, $scope.onError);
 
+                    m.setMap(null);
+                    var removedObject = $scope.map.markers.splice($scope.map.markers.indexOf(m), 1);
+
+                    removedObject = null;
+                }
+            });
+            
+         
+
+        };
+        $scope.cancelAddChurch = function () {
+           
+            angular.forEach($scope.map.markers, function (m) {
+               
+                if(m.id == -1)
+                {
+                
+                    m.setMap(null);
+                    var removedObject = $scope.map.markers.splice($scope.map.markers.indexOf(m), 1);
+
+                    removedObject = null;
+                }
+            });
+            $scope.new_church = {};
+        };
+
+        $scope.onAddIcon = function () {
+
+            if (true) {
+                $scope.new_church = {};
+                
+                marker = new MarkerWithLabel({
+                    position: $scope.map.getCenter(),
+                    map: $scope.map,
+                    title: "new church",
+                    id: -1,
+                    cluster_count: 1,
+                    zIndex: 9999,
+                    icon: $scope.map.icons.targetRedIcon,
+                    labelContent: 'Move me!',
+                    labelAnchor: new google.maps.Point(30, 0),
+                    labelClass: "labelMarker", // the CSS class for the label
+                    labelInBackground: false,
+                    draggable: true
+                });
+                $scope.map.new_marker = marker;
+                google.maps.event.addListener(marker, 'dragend', (function (marker, $scope, newChurchWindowContent  ) {
+                    return function(){
+                        console.log(newChurchWindowContent);
+
+                        if (marker.cluster_count == 1) {
+                            //$scope.church = marker;
+
+                          
+                            $scope.$apply();
+                            console.log(newChurchWindowContent[0].nextSibling.innerHTML);
+                            $scope.newChurchWindow.setContent(newChurchWindowContent[0].nextSibling);
+
+                            $scope.newChurchWindow.open($scope.map, marker);
+                        }
+                    }
+
+                }(marker, $scope, $scope.newChurchWindowContent))
+                
+                );
+                $scope.map.markers.push(marker);
+            }
+
+        };
 
 
 
@@ -154,10 +244,12 @@
             var toDelete = [];
 
             angular.forEach($scope.map.markers, function (church) {
+                if (church.id > 0) {
+                    if (response.filter(function (c) { return c.id == church.id }).length == 0 || church.cluster_count > 1) {
 
-                if (response.filter(function (c) { return c.id == church.id }).length == 0 || church.cluster_count > 1) {
-                    toDelete.push(church);
+                        toDelete.push(church);
 
+                    }
                 }
 
             });
@@ -199,8 +291,8 @@
                             labelContent: church.name,
                             labelAnchor: new google.maps.Point(30, 0),
                             labelClass: "labelMarker", // the CSS class for the label
-                            labelInBackground: false
-
+                            labelInBackground: false,
+                            draggable: false
                         });
                         if (church.jf_contrib > 0) church.jf = new $scope.jesusFilmSign(new google.maps.LatLng(church.latitude, church.longitude), church.jf_contrib, church.development);
 
@@ -223,18 +315,18 @@
 
                     }
 
-                   
+
 
 
 
                     google.maps.event.addListener(marker, 'click', function () {
                         if (church.cluster_count == 1) {
                             //$scope.church = marker;
-                            
+
                             $scope.churchWindow.setContent($scope.churchWindowContent
-                                .replace("{name}",  church.name)
-                                .replace(/{contact_name}/g,  church.contact_name)
-                                .replace(/{contact_email}/g,   church.contact_email)
+                                .replace("{name}", church.name)
+                                .replace(/{contact_name}/g, church.contact_name)
+                                .replace(/{contact_email}/g, church.contact_email)
                                 .replace(/{size}/g, church.size)
                                 .replace(/{target}/g, church.development == 1 ? 'selected' : '')
                                 .replace(/{group}/g, church.development == 2 ? 'selected' : '')
@@ -242,7 +334,7 @@
                                 .replace(/{mult}/g, church.development == 5 ? 'selected' : '')
                                 .replace(/{language}/g, '')
                                 .replace(/{people_group}/g, '')
-                                .replace(/{hide_label}/g, (($scope.assignment.team_role === 'leader' || $scope.assignment.team_role === 'inherited_leader') && church.ministry_id===$scope.assignment.ministry_id )? 'hide' : '')
+                                .replace(/{hide_label}/g, (($scope.assignment.team_role === 'leader' || $scope.assignment.team_role === 'inherited_leader') && church.ministry_id === $scope.assignment.ministry_id) ? 'hide' : '')
                                 .replace(/{hide_input}/g, (($scope.assignment.team_role === 'leader' || $scope.assignment.team_role === 'inherited_leader') && church.ministry_id === $scope.assignment.ministry_id) ? '' : 'hide')
 
                                 );
@@ -310,7 +402,7 @@
 
                 var div = document.createElement('div');
                 div.className = 'jf_label';
-                
+
 
                 div.innerHTML = n;
 
@@ -369,6 +461,6 @@
 
     };
 
-    app.controller("mapController", ["$scope", "$document", "church_service", map_controller]);
+    app.controller("mapController", ["$scope", "$document","$compile", "church_service", map_controller]);
 
 }());
