@@ -1,15 +1,17 @@
 ﻿Imports System.IO
 Imports System.Xml
 Imports System.Net
+Imports System.Web.Configuration.WebConfigurationManager
 Public Class _default
     Inherits System.Web.UI.Page
     Private Const Cashost As String = "https://thekey.me/cas/"
     Dim _service As String = ""
     ' Dim target_service = "http://localhost:52195/api/measurements/token"
-    Dim target_service = "https://stage.sbr.global-registry.org/api/measurements/token"
+    ' Dim target_service = "https://stage.sbr.global-registry.org/api/measurements/token"
+    Dim target_service = AppSettings("service_api") & "/token"
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-
+        hf_api_url.value = AppSettings("service_api")
         If Not String.IsNullOrEmpty(Session("pgt")) Then
 
             Dim validateurl As String = Cashost + "proxy?targetService=" & target_service & "&pgt=" & CStr(Session("pgt")).Trim().ToString()

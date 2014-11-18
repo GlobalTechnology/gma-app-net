@@ -110,6 +110,13 @@
     <Content Include="Content\map_icons\targeticongrey.png" />
     <Content Include="Content\map_icons\targeticonlock.png" />
     <Content Include="Content\map_icons\targetshadow.png" />
+    <Content Include="Content\map_icons\tiny\churchicon.png" />
+    <Content Include="Content\map_icons\tiny\groupicon.png" />
+    <Content Include="Content\map_icons\tiny\multipliedchurchicon.png" />
+    <Content Include="Content\map_icons\tiny\multiplyingchurchicon.png" />
+    <Content Include="Content\map_icons\tiny\targeticon.png" />
+    <Content Include="Content\map_icons\tiny\vision.png" />
+    <Content Include="Content\map_icons\tiny\_notes\dwsync.xml" />
     <Content Include="Content\map_icons\up.png" />
     <Content Include="Content\map_icons\vision.png" />
     <Content Include="Content\map_icons\visiongrey.png" />
@@ -120,6 +127,7 @@
     <Content Include="Content\xeditable.css" />
     <Content Include="default.aspx" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="gcm_app\controllers\storiesCtrl.js" />
     <Content Include="gcm_app\controllers\gcmCtrl - Copy.js" />
     <Content Include="gcm_app\controllers\gcmMapCtrl.js" />
     <Content Include="gcm_app\controllers\gcmCtrl-old.js" />
@@ -130,6 +138,8 @@
     <Content Include="gcm_app\controllers\mapCtrl.js" />
     <Content Include="gcm_app\partials\admin.html" />
     <Content Include="gcm_app\partials\church.html" />
+    <Content Include="gcm_app\partials\new_church_window.html" />
+    <Content Include="gcm_app\partials\stories.html" />
     <Content Include="gcm_app\partials\measurements.html" />
     <Content Include="gcm_app\partials\training.html" />
     <Content Include="gcm_app\partials\map.html" />
@@ -170,6 +180,7 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="gcm_app\gcmApp.js" />
     <Content Include="gcm_app\controllers\gcmCtrl.js" />
+    <Content Include="App_Data\settings.config" />
     <None Include="My Project\PublishProfiles\gcm-app.pubxml" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\i18n\angular-locale_af-na.js" />

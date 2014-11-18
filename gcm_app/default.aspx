@@ -27,6 +27,7 @@
                   geodesic="'geodesic'" fit="true" static="true" draggable="false" editable="false" icons="'icons'"></polylines>--%>
 
             <asp:HiddenField ID="hf_proxyticket" runat="server" />
+             <asp:HiddenField  ID="hf_api_url" runat="server" />
         </div>
         <div ng-app="gcmApp" ng-controller="gcmCtrl">
             <%--     <div ng-repeat="marker in church_markers track by marker.id" >
@@ -74,6 +75,7 @@
                         <li class="active"><a href="#/map" data-target="#">Church</a></li>
                         <li><a href="#/training" data-target="#" ng-show="assignment.team_role === 'leader' || assignment.team_role === 'inherited_leader'">Training</a></li>
                         <li><a href="#/measurements" data-target="#">Measurements</a></li>
+                         <li><a href="#/stories" data-target="#">Stories</a></li>
                          <li><a href="#/admin" data-target="#" ng-show="assignment.team_role === 'leader' || assignment.team_role === 'inherited_leader'">Admin</a></li>
                     </ul>
 
@@ -174,6 +176,7 @@
         <script src="gcm_app/controllers/trainingCtrl.js"></script>
         <%--<script src="gcm_app/controllers/gcmMapCtrl.js"></script>--%>
         <script src="gcm_app/services/training.js"></script>
+        <script src="gcm_app/controllers/storiesCtrl.js"></script>
         <script src="gcm_app/services/church.js"></script>
         <script src="gcm_app/services/measurement.js"></script>
         <script src="gcm_app/services/ministries.js"></script>

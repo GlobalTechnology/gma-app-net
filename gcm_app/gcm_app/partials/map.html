@@ -1,16 +1,24 @@
-﻿<div class="alert alert-info church-mode" >
-    <a href="#/church">Switch to List View</a>
+﻿<div class="alert alert-info church-mode">
+    <!--<a href="#/church">Switch to List View</a>-->
 </div>
-    <div id="map_canvas" style="width: 100%; height: 650px;">
-    </div>
+<div id="map_canvas" style="width: 100%; height: 650px;"  >
+</div>
 
 <div id="side" class="map_side" ng-show="$parent.is_loaded">
+
+    <button type="button" class="btn" ng-click="onAddIcon()" >
+        <img src="/Content/map_icons/targeticon.png" />
+    </button>
+  
+   
+
+    
+    
     <div class="map_legend_header" ng-click="show_legend = !show_legend">
         <span>LEGEND<img class="showMoreArrow" src="/Content/map_icons/{{show_legend ? 'up' : 'down'}}.png" style="padding-left:10px"></span>
     </div>
-    <table class="map_legend" ng-show="show_legend" ng-init="show_legend=true">
-
-
+    <table class="map_legend" ng-show="show_legend" ng-insit="show_legend=true">
+      
         <tbody>
             <tr>
 
@@ -112,7 +120,7 @@
 
             <tbody>
                 <tr>
-                    <td><input type="checkbox" id="parentLineCheckBox" ng-model="show_campus" ></td>
+                    <td><input type="checkbox" id="parentLineCheckBox" ng-model="show_campus"></td>
                     <td style="text-align:center; padding:2px 12px">
                         <div style="display:inline-block; width:14px; height:2px;  background-color:grey"></div>
                     </td>
@@ -131,11 +139,11 @@
     </div>
 </div>
 <div id="church_window" style="display: none;">
-    <div style="clear:both"/>
+    <div style="clear:both" />
     <div class='church-window'>
         <h4>{name} <br /><small>{size} members </small> </h4>
 
-        <table class="table table-condensed" >
+        <table class="table table-condensed">
             <tr>
                 <td><b>Contact Name: </b></td>
                 <td>
@@ -190,5 +198,79 @@
             </tr>
         </table>
     </div>
+
+</div>
+
+
+
+<!--<div id="new_church_window" style="display: none;">
+    <div style="clear:both" />
+    <div class='church-window'>
+        <h4>Create New Church </h4>
+
+        <table class="table table-condensed">
+            <tr>
+                <td><b>Name</b></td>
+                <td>
+                    <input type="text"  value='new_church.name' />
+
+                </td>
+            </tr>
+            <tr>
+                <td><b>Contact Name: </b></td>
+                <td>
+                    <input type="text" value='new_church.contact_name' />
+                </td>
+            </tr>
+            <tr>
+                <td><b>Contact Email:</b> </td>
+                <td>
+
+                    <input type="email" value='new_church.contact_email' />
+                    
+                </td>
+            </tr>
+            <tr >
+                <td><b>Type:</b> </td>
+                <td>
+                    <select ng-model="new_church.development">
+                        <option value="1" {target}>Target</option>
+                        <option value="2" {group}>Group</option>
+                        <option value="3" {church}>Church</option>
+                        <option value="4" {mult}>Multiplying Church</option>
+
+                    </select>
+
+                </td>
+            </tr>
+            <tr>
+                <td><b>Size:</b> </td>
+                <td>
+                    <input type="number" {disabled} value="new_church.size"></input>
+
+                </td>
+            </tr>
+           
+        </table>
+        <button class="btn btn-primary" type="button" ng-click="onAddChurch()">Add</button>
+        <button class="btn" type="button" ng-click="console.log('hello');  onCancelAddChurch()">Cancel</button>
+    </div>
+
+</div>-->
+
+<div id="map_controls" class="map-controls" ng-show="$parent.is_loaded">
+    <div class="input-group" style="display:none;">
+        <input type="text" class="form-control" placeholder="Search for churches">
+        <span class="input-group-btn">
+            <button class="btn btn-default" type="button">
+                <span class="glyphicon glyphicon-search" aria-hidden="true">
+
+                </span>
+            </button>
+        </span>
+    </div><!-- /input-group -->
+
+    <button class="btn  btn-sm" onclick="window.location='#/church'">Switch to List View</button>
+
 
 </div>

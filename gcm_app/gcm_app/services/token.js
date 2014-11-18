@@ -3,7 +3,8 @@
     var token = function ($http) {
 
         var getSession = function () {
-            this._apiResourceUrl = _api_url + "/token?st=" + $('#hf_proxyticket').val()
+            this._apiResourceUrl = _api_url + "/token?st=" + $('#hf_proxyticket').val();
+            console.log(this._apiResourceUrl);
             return $http.get(this._apiResourceUrl, { withCredentials: true })
                 .then(function (response) {
                     

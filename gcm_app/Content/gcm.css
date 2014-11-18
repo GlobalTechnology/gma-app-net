@@ -25,7 +25,10 @@
         font-size: 10px;
         color: #888;
     }
-
+    .map-controls{
+        width: 300px;
+        padding: 20px;
+    }
 .map_side {
     padding: 15px;
     width: 240px;
@@ -40,6 +43,9 @@
     position: absolute;
     padding: 0 5px;
     z-index: 999;
+}
+.gm-style-iw{
+    overflow-y: auto;
 }
 .church-grid img{
     height: 25px;

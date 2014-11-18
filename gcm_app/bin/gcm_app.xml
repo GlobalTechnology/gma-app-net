@@ -22,6 +22,14 @@ hf_proxyticket control.
 Auto-generated field.
 To modify move field declaration from designer file to code-behind file.
 </remarks>
+</member><member name="F:gcm_app._default.hf_api_url">
+	<summary>
+hf_api_url control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
 </member><member name="P:gcm_app.My.MyWebExtension.Computer">
 	<summary>
  Returns information about the host computer.

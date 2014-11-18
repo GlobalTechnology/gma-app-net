@@ -235,12 +235,14 @@
                                     {{assignment.name}}(Local) :
                                 </th>
                             </tr>
+                           
                             <tr>
                                 <td class="meas_table_lbl">Churches</td>
                                 <td>
-                                    23
+                                    20
                                 </td>
                             </tr>
+                           
                             <tr>
                                 <td class="meas_table_lbl">Local</td>
                                 <td>
@@ -249,15 +251,10 @@
                             </tr>
                             <tr>
                                 <th colspan="2">
-                                    Ministries/Teams:
+                                   Sub-Ministries/Teams:
                                 </th>
                             </tr>
-                            <tr>
-                                <td class="meas_table_lbl">{{assignment.name}}</td>
-                                <td>
-                                    <input id="tbLocal" type="number" class="form-control" placeholder="Local" ng-model="edit_measurement.details.local[current_period]" />
-                                </td>
-                            </tr>
+                          
                             <tr ng-repeat="min in edit_measurement.details.sub_ministries">
                                 <td class="meas_table_lbl">{{min.name}}</td>
                                 <td>

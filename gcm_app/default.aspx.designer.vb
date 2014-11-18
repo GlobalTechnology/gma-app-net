@@ -30,4 +30,13 @@ Partial Public Class _default
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hf_proxyticket As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hf_api_url control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hf_api_url As Global.System.Web.UI.WebControls.HiddenField
 End Class

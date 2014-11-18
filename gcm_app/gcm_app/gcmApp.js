@@ -22,6 +22,10 @@ app.config(function ($routeProvider, $httpProvider) {
            templateUrl: "/gcm_app/partials/admin.html",
            controller: "adminController"
        })
+         .when("/stories", {
+             templateUrl: "/gcm_app/partials/stories.html",
+             controller: "storiesController"
+         })
          .when("/church", {
              templateUrl: "/gcm_app/partials/church.html",
              controller: "churchController"
@@ -29,4 +33,5 @@ app.config(function ($routeProvider, $httpProvider) {
        .otherwise({ redirectTo: "/map" });
 });
 //var _api_url = 'http://localhost:52195/api/measurements';
-var _api_url = 'https://stage.sbr.global-registry.org/api/measurements';
+var _api_url = $('#hf_api_url').val();
+console.log(_api_url);
