@@ -14,6 +14,7 @@
         $scope.map_filter = 'min_only';
         $scope.icon_add_mode = false;
         $scope.new_church = {};
+        $scope.edit_church = {};
         setTimeout(initialize, 0);
 
 
@@ -35,30 +36,33 @@
             $scope.map.markers = [];
             $scope.church = { name: "" };
 
-            $scope.churchWindowContent = $('#church_window')[0].innerHTML;// "<div class='church-window'><h3>{{name}}</h3></div>";
+        
+         //   $scope.churchWindowContent = $compile('<div id="church_window_content" ng-include src="\'/gcm_app/partials/edit_church_window.html\'"></div>')($scope);
+          //  console.log($scope.churchWindowContent);
+            //$scope.churchWindowContent = $('#church_window')[0].innerHTML;// "<div class='church-window'><h3>{{name}}</h3></div>";
 
-            $scope.churchWindow = new google.maps.InfoWindow({ content: $scope.churchWindowContent });
+            $scope.churchWindow = new google.maps.InfoWindow();
+
+
             $scope.newChurchWindow = new google.maps.InfoWindow();
-            var content = '<div id="new_church_window_content" ng-include src="\'/gcm_app/partials/new_church_window.html\'"></div>';
-            console.log(content);
-            $scope.newChurchWindowContent = $compile(content)($scope);
-            console.log($scope.newChurchWindowContent);
-
+          
+            $scope.newChurchWindowContent = $compile('<div id="new_church_window_content" ng-include src="\'/gcm_app/partials/new_church_window.html\'"></div>')($scope);
+           
             $scope.map.church_lines = [];
             $scope.map.icons = {};
-            $scope.map.icons.churchIcon = new google.maps.MarkerImage('Content/map_icons/churchicon.png', new google.maps.Size(45, 62), new google.maps.Point(0, 0), new google.maps.Point(14, 38));
+            $scope.map.icons.churchIcon = new google.maps.MarkerImage('Content/map_icons/churchicon.png', new google.maps.Size(45, 62), new google.maps.Point(0, 0), new google.maps.Point(22, 62));
             $scope.map.icons.mapClusterIcon = new google.maps.MarkerImage('Content/map_icons/mapclusterfading.png', new google.maps.Size(60, 60), new google.maps.Point(0, 0), new google.maps.Point(30, 30));
             $scope.map.icons.icon5r = new google.maps.MarkerImage('Content/map_icons/multipliedchurchicon_map.png', new google.maps.Size(52, 62), new google.maps.Point(0, 0), new google.maps.Point(25, 58));
             $scope.map.icons.icon5rl = new google.maps.MarkerImage('Content/map_icons/multipliedchurchiconlock.png', new google.maps.Size(52, 65), new google.maps.Point(0, 0), new google.maps.Point(25, 61));
-            $scope.map.icons.icon4r = new google.maps.MarkerImage('Content/map_icons/multiplyingchurchicon.png', new google.maps.Size(52, 62), new google.maps.Point(0, 0), new google.maps.Point(25, 58));
+            $scope.map.icons.icon4r = new google.maps.MarkerImage('Content/map_icons/multiplyingchurchicon.png', new google.maps.Size(52, 62), new google.maps.Point(0, 0), new google.maps.Point(25,62));
             $scope.map.icons.icon4rl = new google.maps.MarkerImage('Content/map_icons/multiplyingchurchiconlock.png', new google.maps.Size(52, 65), new google.maps.Point(0, 0), new google.maps.Point(25, 61));
             $scope.map.icons.icon4sh = new google.maps.MarkerImage('Content/map_icons/multiplyingchurchshadow.png', new google.maps.Size(60, 48), new google.maps.Point(0, 0), new google.maps.Point(10, 46));
             $scope.map.icons.churchIconShadow = new google.maps.MarkerImage('Content/map_icons/churchshadow.png', new google.maps.Size(59, 49), new google.maps.Point(0, 0), new google.maps.Point(10, 47));
             $scope.map.icons.churchIconLocked = new google.maps.MarkerImage('Content/map_icons/churchiconlock.png', new google.maps.Size(45, 65), new google.maps.Point(0, 0), new google.maps.Point(22, 61));
-            $scope.map.icons.groupRed = new google.maps.MarkerImage('Content/map_icons/groupicon.png', new google.maps.Size(40, 44), new google.maps.Point(0, 0), new google.maps.Point(11, 24));
+            $scope.map.icons.groupRed = new google.maps.MarkerImage('Content/map_icons/groupicon.png', new google.maps.Size(40, 44), new google.maps.Point(0, 0), new google.maps.Point(20, 44));
             $scope.map.icons.groupRedLocked = new google.maps.MarkerImage('Content/map_icons/groupiconlock.png', new google.maps.Size(48, 47), new google.maps.Point(0, 0), new google.maps.Point(20, 43));
             $scope.map.icons.groupIconShadow = new google.maps.MarkerImage('Content/map_icons/groupshadow.png', new google.maps.Size(49, 40), new google.maps.Point(0, 0), new google.maps.Point(10, 38));
-            $scope.map.icons.targetRedIcon = new google.maps.MarkerImage('Content/map_icons/targeticon.png', new google.maps.Size(23, 42), new google.maps.Point(0, 0), new google.maps.Point(8, 24));
+            $scope.map.icons.targetRedIcon = new google.maps.MarkerImage('Content/map_icons/targeticon.png', new google.maps.Size(23, 42), new google.maps.Point(0, 0), new google.maps.Point(12, 42));
             $scope.map.icons.targetRedLockedIcon = new google.maps.MarkerImage('Content/map_icons/targeticonlock.png', new google.maps.Size(31, 46), new google.maps.Point(0, 0), new google.maps.Point(11, 42));
             $scope.map.icons.targetShadow = new google.maps.MarkerImage('Content/map_icons/targetshadow.png', new google.maps.Size(33, 36), new google.maps.Point(0, 0), new google.maps.Point(4, 34));
             $scope.map.icons.visionRedIcon = new google.maps.MarkerImage('Content/map_icons/vision.png', new google.maps.Size(23, 42), new google.maps.Point(0, 0), new google.maps.Point(11, 37));
@@ -186,7 +190,7 @@
 
         $scope.onAddIcon = function () {
 
-            if (true) {
+            if ($scope.map.markers.filter(function (c) { return c.id ===-1 }).length == 0 ) {
                 $scope.new_church = {};
                 
                 marker = new MarkerWithLabel({
@@ -198,7 +202,7 @@
                     zIndex: 9999,
                     icon: $scope.map.icons.targetRedIcon,
                     labelContent: 'Move me!',
-                    labelAnchor: new google.maps.Point(30, 0),
+                    labelAnchor: new google.maps.Point(42, 0),
                     labelClass: "labelMarker", // the CSS class for the label
                     labelInBackground: false,
                     draggable: true
@@ -213,8 +217,7 @@
 
                           
                             $scope.$apply();
-                            console.log(newChurchWindowContent[0].nextSibling.innerHTML);
-                            $scope.newChurchWindow.setContent(newChurchWindowContent[0].nextSibling);
+                             $scope.newChurchWindow.setContent(newChurchWindowContent[0].nextSibling);
 
                             $scope.newChurchWindow.open($scope.map, marker);
                         }
@@ -317,37 +320,31 @@
 
 
 
+                    google.maps.event.addListener(marker, 'click', (function (church,marker, $scope,churchWindowContent) {
+                        return function () {
 
+                            //google.maps.event.addListener(marker, 'click', function () {
+                            if (church.cluster_count == 1) {
+                                //$scope.church = marker;
+                              
+                                $scope.edit_church = church;
+                                $scope.$apply();
+                                $scope.churchWindow.setContent(churchWindowContent[0].nextSibling);
 
-                    google.maps.event.addListener(marker, 'click', function () {
-                        if (church.cluster_count == 1) {
-                            //$scope.church = marker;
+                                $scope.churchWindow.open($scope.map, marker);
+                                $scope.edit_church.editable = (($scope.assignment.team_role === 'leader' || $scope.assignment.team_role === 'inherited_leader') && church.ministry_id === $scope.assignment.ministry_id);
 
-                            $scope.churchWindow.setContent($scope.churchWindowContent
-                                .replace("{name}", church.name)
-                                .replace(/{contact_name}/g, church.contact_name)
-                                .replace(/{contact_email}/g, church.contact_email)
-                                .replace(/{size}/g, church.size)
-                                .replace(/{target}/g, church.development == 1 ? 'selected' : '')
-                                .replace(/{group}/g, church.development == 2 ? 'selected' : '')
-                                .replace(/{church}/g, church.development == 3 ? 'selected' : '')
-                                .replace(/{mult}/g, church.development == 5 ? 'selected' : '')
-                                .replace(/{language}/g, '')
-                                .replace(/{people_group}/g, '')
-                                .replace(/{hide_label}/g, (($scope.assignment.team_role === 'leader' || $scope.assignment.team_role === 'inherited_leader') && church.ministry_id === $scope.assignment.ministry_id) ? 'hide' : '')
-                                .replace(/{hide_input}/g, (($scope.assignment.team_role === 'leader' || $scope.assignment.team_role === 'inherited_leader') && church.ministry_id === $scope.assignment.ministry_id) ? '' : 'hide')
-
-                                );
-
-                            //$scope.churchWindow.setContent($('#churchWindow'));
-                            $scope.churchWindow.open($scope.map, marker);
+                                $scope.churchWindow.open($scope.map, marker);
+                            }
+                            else {
+                                $scope.map.setCenter(marker.position);
+                                $scope.map.setZoom($scope.map.getZoom() + 2);
+                            }
                         }
-                        else {
-                            $scope.map.setCenter(marker.position);
-                            $scope.map.setZoom($scope.map.getZoom() + 2);
-                        }
-
-                    });
+                    }(church,marker, $scope,$compile('<div id="church_window_content" ng-include src="\'/gcm_app/partials/edit_church_window.html\'"></div>')($scope)
+))
+                
+                );
                     $scope.map.markers.push(marker);
                 }
 
@@ -431,11 +428,11 @@
 
                 if (type == 'cluster') { x = -20; y = 8; }
 
-                else if (type >= 0 && type <= 1) { x = -23; y = -4; }
+                else if (type >= 0 && type <= 1) { x = -23; y = -12; }
 
-                else if (type == 2) { x = -22; y = -5; }
+                else if (type == 2) { x = -22; y = -13; }
 
-                else if (type >= 3) { x = -20; y = -5; }
+                else if (type >= 3) { x = -20; y = -13; }
 
                 else { x = 0; y = 0; }
 

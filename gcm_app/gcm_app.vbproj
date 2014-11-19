@@ -138,6 +138,7 @@
     <Content Include="gcm_app\controllers\mapCtrl.js" />
     <Content Include="gcm_app\partials\admin.html" />
     <Content Include="gcm_app\partials\church.html" />
+    <Content Include="gcm_app\partials\edit_church_window.html" />
     <Content Include="gcm_app\partials\new_church_window.html" />
     <Content Include="gcm_app\partials\stories.html" />
     <Content Include="gcm_app\partials\measurements.html" />

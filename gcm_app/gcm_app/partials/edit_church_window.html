@@ -1,0 +1,62 @@
+﻿<div id="church_window" >
+    <div style="clear:both" />
+    <div class='church-window'>
+        <h4>{{edit_church.name}} <br /><small>{{edit_church.size}} members </small> </h4>
+
+        <table class="table table-condensed">
+            <tr>
+                <td><b>Contact Name: </b></td>
+                <td>
+                    <input type="text" ng-show="edit_church.editable" ng-model='edit_church.contact_name' />
+                    <label ng-hide="edit_church.editable">{{edit_church.contact_name}}</label>
+
+                </td>
+            </tr>
+            <tr>
+                <td><b>Contact Email:</b> </td>
+                <td>
+
+                    <input type="email" ng-show="edit_church.editable" ng-model='edit_church.contact_email' />
+                    <label ng-hide="edit_church.editable">{{edit_church.contact_email}}</label>
+
+                </td>
+            </tr>
+            <tr ng-show="edit_church.editable">
+                <td><b>Type:</b> </td>
+                <td>
+                    <select ng-model="edit_church.development" ng-disabled="!edit_church.editable">
+                        <option value="1">Target</option>
+                        <option value="2">Group</option>
+                        <option value="3">Church</option>
+                        <option value="4">Multiplying Church</option>
+
+                    </select>
+
+                </td>
+            </tr>
+            <tr ng-show="edit_church.editable">
+                <td><b>Size:</b> </td>
+                <td>
+                    <input type="number" ng-disabled="!edit_church.editable" value="{size}"></input>
+
+                </td>
+            </tr>
+            <tr>
+                <td><b>Language:</b> </td>
+                <td>
+                    <input type="text" ng-show="edit_church.editable" ng-model='language' />
+                    <label ng-hide="edit_church.editable">{{edit_church.language}}</label>
+
+                </td>
+            </tr>
+            <tr>
+                <td><b>People Group:</b> </td>
+                <td>
+                    <input type="text" ng-show="edit_church.editable" ng-model='people_group' />
+                    <label ng-hide="edit_church.editable">{{people_group}}</label>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+</div>
