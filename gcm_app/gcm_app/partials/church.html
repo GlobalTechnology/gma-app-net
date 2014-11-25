@@ -1,13 +1,24 @@
-﻿<div alert alert-info church-mode>
-    <a href="#/map">Switch to Map View</a>
-</div>
+﻿
 
+<button type="button" class="btn btn-default btn-sm" onclick="window.location = '#/map'; return false;">
+    <span class="glyphicon glyphicon-globe" aria-hidden="true">
+    </span> Map View
+</button>
+<div class="alert alert-info pull-right col-sm-6">
+    Click on a header to sort. Double click a value to edit.
+</div>
+<div class="clearfix" />
 <div class="church-grid" >
-    <table class="table table-striped" >
+    <div class="gridStyle " ng-grid="gridOptions">
+    </div>
+
+
+    <!--<table class="table table-striped" >
         <thead>
             <tr>
                 <td></td>
                 <td>Name</td>
+                <td>Contact</td>
                 <td>Size</td>
                 <td>language</td>
                 <td>Ethnic Group</td>
@@ -24,6 +35,12 @@
                 </td>
                 <td><b>{{ch.name}}</b></td>
                 <td>
+                    <a ng-show="ch.contact_email.length>0" href="mailto:{{ch.contact_email}}">
+                        {{ch.contact_name}}
+                    </a>
+                    <span ng-hide="ch.contact_email.length>0">{{ch.contact_name}}</span>
+                </td>
+                <td>
                     {{ch.size}}
                 </td>
                 <td>
@@ -37,7 +54,7 @@
                 </td>
             </tr>
         </tbody>
-    </table>
+    </table>-->
 
    
 </div>
