@@ -1,24 +1,27 @@
 ﻿<div class="alert alert-info church-mode">
     <!--<a href="#/church">Switch to List View</a>-->
 </div>
-<div id="map_canvas" style="width: 100%; height: 650px;"  >
+<div id="map_canvas" style="width: 100%; height: 650px;">
 </div>
 
 <div id="side" class="map_side" ng-show="$parent.is_loaded">
 
-    <button type="button" class="btn" ng-click="onAddIcon()" >
+    <button type="button" class="btn" ng-click="onAddIcon()">
         <img src="/Content/map_icons/targeticon.png" />
     </button>
-  
-   
 
-    
-    
+    <button type="button" class="btn" ng-click="onAddTraining()">
+        <img src="/Content/map_icons/churchicon.png" />
+    </button>
+
+
+
+
     <div class="map_legend_header" ng-click="show_legend = !show_legend">
         <span>LEGEND<img class="showMoreArrow" src="/Content/map_icons/{{show_legend ? 'up' : 'down'}}.png" style="padding-left:10px"></span>
     </div>
     <table class="map_legend" ng-show="show_legend" ng-insit="show_legend=true">
-      
+
         <tbody>
             <tr>
 
@@ -200,9 +203,6 @@
     </div>
 
 </div>-->
-
-
-
 <!--<div id="new_church_window" style="display: none;">
     <div style="clear:both" />
     <div class='church-window'>
@@ -227,7 +227,7 @@
                 <td>
 
                     <input type="email" value='new_church.contact_email' />
-                    
+
                 </td>
             </tr>
             <tr >
@@ -250,7 +250,7 @@
 
                 </td>
             </tr>
-           
+
         </table>
         <button class="btn btn-primary" type="button" ng-click="onAddChurch()">Add</button>
         <button class="btn" type="button" ng-click="console.log('hello');  onCancelAddChurch()">Cancel</button>
@@ -259,18 +259,26 @@
 </div>-->
 
 <div id="map_controls" class="map-controls" ng-show="$parent.is_loaded">
-    <div class="input-group" style="display:none;">
-        <input type="text" class="form-control" placeholder="Search for churches">
-        <span class="input-group-btn">
-            <button class="btn btn-default" type="button">
-                <span class="glyphicon glyphicon-search" aria-hidden="true">
+    <div class="pull-left map-search" style="display: none;" >
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search for churches">
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="button">
+                    <span class="glyphicon glyphicon-search" aria-hidden="true">
 
-                </span>
-            </button>
-        </span>
-    </div><!-- /input-group -->
+                    </span>
+                </button>
+            </span>
+        </div><!-- /input-group -->
 
-    <button class="btn  btn-sm" onclick="window.location='#/church'">Switch to List View</button>
+    </div>
+    <div class="pull-left map-mode" >
+
+        <button type="button" class="btn btn-default btn-sm" onclick="window.location='#/church'">
+            <span class="glyphicon glyphicon-th-list" aria-hidden="true">
+            </span> List View
+        </button>
+    </div>
 
 
 </div>

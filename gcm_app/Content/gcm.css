@@ -26,7 +26,7 @@
         color: #888;
     }
     .map-controls{
-        width: 300px;
+        /*width: 300px;*/
         padding: 20px;
     }
 .map_side {
@@ -94,11 +94,39 @@
     width: 60px;
     opacity: 0.75;
 }
-
-.ministry-title {
-    font-size: xx-large;
-    color: white;
+.labelMoveMarker {
+    color: #000;
+    pointer-events: none;
+    text-align: center;
+    width: 100px;
+    opacity: 0.75;
+    font-size: large;
+    font-weight: bold;
+    box-shadow: #eeee00 30px 30px inset;
 }
+
+.ministry-title  {
+    font-size: xx-large;
+    color: white !important;
+
+}
+
 .meas_table_lbl{
     text-align: right;
+}
+.map-search{
+    width: 300px;
+}
+.map-mode{
+    padding:2px;
+}
+
+.gridStyle {
+    border: 1px solid rgb(212,212,212);
+    width: 100%; 
+  
+}
+
+.church-grid .ngViewport{
+    overflow: inherit;
 }

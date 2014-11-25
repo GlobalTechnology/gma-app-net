@@ -44,11 +44,28 @@
                 });
 
         }
+        var saveChurch = function (session_ticket, church) {
 
+            this._apiResourceUrl = _api_url + "/churches/" + church.id + "?token=" + session_ticket;
+
+
+
+            console.log(this._apiResourceUrl);
+
+
+            return $http.put(this._apiResourceUrl, church, { withCredentials: true })
+                .then(function (response) {
+
+                    return response.data;
+
+                });
+
+        }
 
         return {
             getChurches: getChurches,
-            addChurch: addChurch
+            addChurch: addChurch,
+            saveChurch: saveChurch
         };
 
     };

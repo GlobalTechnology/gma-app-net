@@ -40,37 +40,7 @@
             }
         });
 
-        $scope.periods = [];
-        var dt = new Date();
-
-        for (var i = 0; i < 12; i++) {
-
-            $scope.periods.push($filter('date')(new Date(dt), 'yyyy-MM'));
-
-            dt = new Date(dt).setMonth(new Date(dt).getMonth() - 1);
-
-        }
-        $scope.current_period = $scope.periods[0];
-        $scope.nextPeriod = function () {
-            for (var i = 0 ; i < $scope.periods.length; i++) {
-                if ($scope.periods[i] === $scope.current_period && i > 0) {
-                    $scope.current_period = $scope.periods[i - 1];
-                    break;
-                }
-            }
-
-        };
-
-        $scope.prevPeriod = function () {
-            for (var i = 0 ; i < $scope.periods.length; i++) {
-                if ($scope.periods[i] === $scope.current_period && i < $scope.periods.length - 1) {
-                    $scope.current_period = $scope.periods[i + 1];
-                    break;
-                }
-            }
-
-        };
-
+       
         $scope.onGetMeasurements = function (response) {
             console.log(response);
             $scope.assignment.measurements = response;

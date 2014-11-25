@@ -3,7 +3,7 @@
     //Find existing Module instance named 'gcmApp'
     var app = angular.module("gcmApp");
 
-    var map_controller = function ($scope, $document,$compile, church_service) {
+    var map_controller = function ($scope, $document, $compile, church_service) {
         $scope.$parent.is_loaded = false;
         $scope.show_target_point = true;
         $scope.show_group = true;
@@ -15,6 +15,7 @@
         $scope.icon_add_mode = false;
         $scope.new_church = {};
         $scope.edit_church = {};
+        $scope.SetParentMode = false;
         setTimeout(initialize, 0);
 
 
@@ -36,25 +37,31 @@
             $scope.map.markers = [];
             $scope.church = { name: "" };
 
-        
-         //   $scope.churchWindowContent = $compile('<div id="church_window_content" ng-include src="\'/gcm_app/partials/edit_church_window.html\'"></div>')($scope);
-          //  console.log($scope.churchWindowContent);
+
+            //   $scope.churchWindowContent = $compile('<div id="church_window_content" ng-include src="\'/gcm_app/partials/edit_church_window.html\'"></div>')($scope);
+            //  console.log($scope.churchWindowContent);
             //$scope.churchWindowContent = $('#church_window')[0].innerHTML;// "<div class='church-window'><h3>{{name}}</h3></div>";
 
             $scope.churchWindow = new google.maps.InfoWindow();
-
-
+            $scope.churchWindowContent = $compile('<div id="church_window_content" ng-include src="\'/gcm_app/partials/edit_church_window.html\'"></div>')($scope)
+            $scope.churchWindow.setOptions({ maxWidth: 300 });
             $scope.newChurchWindow = new google.maps.InfoWindow();
-          
+            google.maps.event.addListener($scope.newChurchWindow, 'closeclick', function () {
+                $scope.cancelAddChurch();
+            });
             $scope.newChurchWindowContent = $compile('<div id="new_church_window_content" ng-include src="\'/gcm_app/partials/new_church_window.html\'"></div>')($scope);
-           
+
+
+            $scope.newTrainingWindow = new google.maps.InfoWindow();
+            $scope.newTrainingContent = $compile('<div id="new_training_window_content" ng-include src="\'/gcm_app/partials/new_training.html\'"></div>')($scope);
+
             $scope.map.church_lines = [];
             $scope.map.icons = {};
             $scope.map.icons.churchIcon = new google.maps.MarkerImage('Content/map_icons/churchicon.png', new google.maps.Size(45, 62), new google.maps.Point(0, 0), new google.maps.Point(22, 62));
             $scope.map.icons.mapClusterIcon = new google.maps.MarkerImage('Content/map_icons/mapclusterfading.png', new google.maps.Size(60, 60), new google.maps.Point(0, 0), new google.maps.Point(30, 30));
             $scope.map.icons.icon5r = new google.maps.MarkerImage('Content/map_icons/multipliedchurchicon_map.png', new google.maps.Size(52, 62), new google.maps.Point(0, 0), new google.maps.Point(25, 58));
             $scope.map.icons.icon5rl = new google.maps.MarkerImage('Content/map_icons/multipliedchurchiconlock.png', new google.maps.Size(52, 65), new google.maps.Point(0, 0), new google.maps.Point(25, 61));
-            $scope.map.icons.icon4r = new google.maps.MarkerImage('Content/map_icons/multiplyingchurchicon.png', new google.maps.Size(52, 62), new google.maps.Point(0, 0), new google.maps.Point(25,62));
+            $scope.map.icons.icon4r = new google.maps.MarkerImage('Content/map_icons/multiplyingchurchicon.png', new google.maps.Size(52, 62), new google.maps.Point(0, 0), new google.maps.Point(25, 62));
             $scope.map.icons.icon4rl = new google.maps.MarkerImage('Content/map_icons/multiplyingchurchiconlock.png', new google.maps.Size(52, 65), new google.maps.Point(0, 0), new google.maps.Point(25, 61));
             $scope.map.icons.icon4sh = new google.maps.MarkerImage('Content/map_icons/multiplyingchurchshadow.png', new google.maps.Size(60, 48), new google.maps.Point(0, 0), new google.maps.Point(10, 46));
             $scope.map.icons.churchIconShadow = new google.maps.MarkerImage('Content/map_icons/churchshadow.png', new google.maps.Size(59, 49), new google.maps.Point(0, 0), new google.maps.Point(10, 47));
@@ -149,7 +156,10 @@
         }, true);
 
 
-
+        $scope.onAddChurch = function (response) {
+            console.log('church added');
+            $scope.loadChurches();
+        }
 
         $scope.addChurch = function () {
             angular.forEach($scope.map.markers, function (m) {
@@ -166,19 +176,20 @@
                     var removedObject = $scope.map.markers.splice($scope.map.markers.indexOf(m), 1);
 
                     removedObject = null;
+
+
                 }
             });
-            
-         
+
+
 
         };
         $scope.cancelAddChurch = function () {
-           
+
             angular.forEach($scope.map.markers, function (m) {
-               
-                if(m.id == -1)
-                {
-                
+
+                if (m.id < 0) {
+
                     m.setMap(null);
                     var removedObject = $scope.map.markers.splice($scope.map.markers.indexOf(m), 1);
 
@@ -188,11 +199,58 @@
             $scope.new_church = {};
         };
 
+        $scope.onAddTraining = function () {
+
+            if ($scope.map.markers.filter(function (c) { return c.id < 0 }).length == 0) {
+                $scope.new_church = {};
+
+                marker = new MarkerWithLabel({
+                    position: $scope.map.getCenter(),
+                    map: $scope.map,
+                    title: "new_training",
+                    id: -2,
+                    cluster_count: 1,
+                    zIndex: 9999,
+                    icon: $scope.map.icons.targetRedIcon,
+                    labelContent: 'MOVE ME!',
+                    labelAnchor: new google.maps.Point(42, 0),
+                    labelClass: "labelMarker", // the CSS class for the label
+                    labelInBackground: false,
+                    draggable: true
+                });
+                $scope.map.new_training_marker = marker;
+                google.maps.event.addListener(marker, 'dragend', (function (marker, $scope, newTrainingContent) {
+                    return function () {
+
+                        if (marker.cluster_count == 1) {
+                            //$scope.church = marker;
+
+
+                            $scope.$apply();
+                            $scope.newTrainingWindow.close();
+                            $scope.newTrainingWindow.setContent(newTrainingContent[0].nextSibling);
+
+                            $scope.newTrainingWindow.open($scope.map, marker);
+                        }
+                    }
+
+                }(marker, $scope, $scope.newTrainingContent))
+
+                );
+                $scope.map.markers.push(marker);
+            }
+
+        };
+
+        $scope.onSaveChurch = function (response) {
+            $scope.loadChurches();
+        };
+
         $scope.onAddIcon = function () {
 
-            if ($scope.map.markers.filter(function (c) { return c.id ===-1 }).length == 0 ) {
+            if ($scope.map.markers.filter(function (c) { return c.id < 0 }).length == 0) {
                 $scope.new_church = {};
-                
+
                 marker = new MarkerWithLabel({
                     position: $scope.map.getCenter(),
                     map: $scope.map,
@@ -202,36 +260,71 @@
                     zIndex: 9999,
                     icon: $scope.map.icons.targetRedIcon,
                     labelContent: 'Move me!',
-                    labelAnchor: new google.maps.Point(42, 0),
-                    labelClass: "labelMarker", // the CSS class for the label
+                    labelAnchor: new google.maps.Point(50, -20),
+                    labelClass: "labelMoveMarker", // the CSS class for the label
                     labelInBackground: false,
                     draggable: true
                 });
                 $scope.map.new_marker = marker;
-                google.maps.event.addListener(marker, 'dragend', (function (marker, $scope, newChurchWindowContent  ) {
-                    return function(){
-                        console.log(newChurchWindowContent);
+                marker.setAnimation(google.maps.Animation.BOUNCE);
+                //$scope.$apply();
+                if (!$scope.newChurchWindow.getContent()) {
+                    $scope.newChurchWindow.setContent($scope.newChurchWindowContent[0].nextSibling);
+                }
+                $scope.newChurchWindow.open($scope.map, marker);
 
-                        if (marker.cluster_count == 1) {
-                            //$scope.church = marker;
-
-                          
-                            $scope.$apply();
-                             $scope.newChurchWindow.setContent(newChurchWindowContent[0].nextSibling);
-
-                            $scope.newChurchWindow.open($scope.map, marker);
-                        }
-                    }
-
-                }(marker, $scope, $scope.newChurchWindowContent))
-                
-                );
                 $scope.map.markers.push(marker);
             }
 
         };
+        $scope.SetParent = function () {
+            $scope.SetParentMode = true;
+            $scope.churchWindow.close();
+            $scope.new_parentLine = new google.maps.Polyline({
+                path: [new google.maps.LatLng($scope.edit_church.latitude, $scope.edit_church.longitude), new google.maps.LatLng($scope.edit_church.latitude, $scope.edit_church.longitude)],
+                geodesic: true,
+                strokeColor: '#777',
+                strokeOpacity: 1.0,
+                strokeWeight: 2,
+                icons: [{
+                    icon: {
+                        path: google.maps.SymbolPath.FORWARD_OPEN_ARROW,
+                        strokeWeight: 1.5
+                    },
+                    offset: '12px',
+                    repeat: '25px'
+                }]
+            });
+          $scope.move_event=  google.maps.event.addListener($scope.map, 'mousemove', function (e) {
+  
+
+              $scope.new_parentLine.setPath([e.latLng, new google.maps.LatLng($scope.edit_church.latitude, $scope.edit_church.longitude)]);
+               
+            });
+           
 
 
+          $scope.new_parentLine.setMap($scope.map);
+         //   $scope.map.church_lines.push(parentLine);
+
+
+        }
+        $scope.MoveChurch = function () {
+            angular.forEach($scope.map.markers, function (m) {
+
+                if (m.id === $scope.edit_church.id) {
+                    m.setAnimation(google.maps.Animation.BOUNCE);
+                    m.setDraggable(true);
+                    $scope.churchWindow.close();
+
+                }
+            });
+        };
+        $scope.SaveChurch = function () {
+            console.log($scope.edit_church);
+            church_service.saveChurch($scope.user.session_ticket, $scope.edit_church).then($scope.onSaveChurch, $scope.onError);
+
+        };
 
         $scope.onGetChurches = function (response) {
             $scope.churches = response;
@@ -275,6 +368,9 @@
             angular.forEach($scope.churches, function (church) {
                 if ($scope.map.markers.filter(function (c) { return c.id == church.id }).length == 0) {
                     var marker = {};
+
+                    
+
                     if (church.cluster_count == 1) {
                         var churchIconToUse = {}
                         if (church.development == 5) { churchIconToUse = $scope.map.icons.icon5r; }
@@ -317,34 +413,70 @@
                         if (church.jf_contrib > 0) church.jf = new $scope.jesusFilmSign(new google.maps.LatLng(church.latitude, church.longitude), church.jf_contrib, 'cluster');
 
                     }
+                    if (!$scope.churchWindow.getContent())
+                        $scope.churchWindow.setContent($scope.churchWindowContent[0].nextSibling);
 
 
-
-                    google.maps.event.addListener(marker, 'click', (function (church,marker, $scope,churchWindowContent) {
+                    google.maps.event.addListener(marker, 'click', (function (church, marker) {
                         return function () {
+                            if ($scope.SetParentMode) {
+                                if (church.cluster_count == 1 && church.id !== $scope.edit_church.id) {
+                                    google.maps.event.removeListener($scope.move_event);
+                                    $scope.SetParentMode = false;
+                                    $scope.new_parentLine.setPath([ new google.maps.LatLng(church.latitude, church.longitude), new google.maps.LatLng($scope.edit_church.latitude, $scope.edit_church.longitude)]);
+                                    //update church's parent
+                                    var new_church = {};
+                                    new_church.id = $scope.edit_church.id;
+                                    new_church.parent_id=church.id;
+                                    $scope.edit_church.parent_id = church.id;
+                                    console.log(new_church);
+                                    church_service.saveChurch($scope.user.session_ticket, new_church).then($scope.onSaveChurch, $scope.onError);
 
+
+                                }
+                                
+                                    return;
+
+                            }
                             //google.maps.event.addListener(marker, 'click', function () {
                             if (church.cluster_count == 1) {
                                 //$scope.church = marker;
-                              
-                                $scope.edit_church = church;
-                                $scope.$apply();
-                                $scope.churchWindow.setContent(churchWindowContent[0].nextSibling);
 
-                                $scope.churchWindow.open($scope.map, marker);
+                                $scope.edit_church = church;
                                 $scope.edit_church.editable = (($scope.assignment.team_role === 'leader' || $scope.assignment.team_role === 'inherited_leader') && church.ministry_id === $scope.assignment.ministry_id);
 
+                                $scope.$apply();
+                                $scope.churchWindow.close();
+                                $scope.churchWindow.setOptions({ maxWidth: 300 });
                                 $scope.churchWindow.open($scope.map, marker);
+
+                                // $scope.churchWindow.open($scope.map, marker);
                             }
                             else {
                                 $scope.map.setCenter(marker.position);
                                 $scope.map.setZoom($scope.map.getZoom() + 2);
                             }
                         }
-                    }(church,marker, $scope,$compile('<div id="church_window_content" ng-include src="\'/gcm_app/partials/edit_church_window.html\'"></div>')($scope)
-))
-                
-                );
+                    }(church, marker, $scope)));
+                    google.maps.event.addListener(marker, 'dragend', (function (church, marker) {
+                        return function () {
+
+                            //google.maps.event.addListener(marker, 'click', function () {
+                            if (church.cluster_count == 1) {
+                                var new_church = {};
+                                new_church.id = church.id;
+                                new_church.latitude = marker.getPosition().lat();
+                                new_church.longitude = marker.getPosition().lng();
+                                church.latitude = new_church.latitude;
+                                church.longitude = new_church.longitude;
+                                church_service.saveChurch($scope.user.session_ticket, new_church).then($scope.onSaveChurch, $scope.onError);
+                               
+                                marker.setAnimation(null);
+                                marker.setDraggable(false);
+                            }
+
+                        }
+                    }(church, marker)));
                     $scope.map.markers.push(marker);
                 }
 
@@ -458,6 +590,6 @@
 
     };
 
-    app.controller("mapController", ["$scope", "$document","$compile", "church_service", map_controller]);
+    app.controller("mapController", ["$scope", "$document", "$compile", "church_service", map_controller]);
 
 }());

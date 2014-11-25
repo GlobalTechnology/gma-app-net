@@ -138,7 +138,9 @@
     <Content Include="gcm_app\controllers\mapCtrl.js" />
     <Content Include="gcm_app\partials\admin.html" />
     <Content Include="gcm_app\partials\church.html" />
+    <Content Include="gcm_app\partials\edit_training.html" />
     <Content Include="gcm_app\partials\edit_church_window.html" />
+    <Content Include="gcm_app\partials\new_training.html" />
     <Content Include="gcm_app\partials\new_church_window.html" />
     <Content Include="gcm_app\partials\stories.html" />
     <Content Include="gcm_app\partials\measurements.html" />
@@ -479,6 +481,8 @@
     <Content Include="Scripts\markerwithlabel.js" />
     <Content Include="Scripts\ng-grid.js" />
     <Content Include="Scripts\ng-grid.min.js" />
+    <Content Include="Scripts\ui-grid-stable.min.css" />
+    <Content Include="Scripts\ui-grid-stable.min.js" />
     <Content Include="Scripts\xeditable.min.js" />
     <Content Include="Web.config" />
   </ItemGroup>

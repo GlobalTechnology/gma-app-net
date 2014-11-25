@@ -101,33 +101,10 @@
 
 <div class="panel panel-default" ng-show="$parent.is_loaded">
     <div class="panel-body">
-        <div class="btn-group" style="float:right;">
-            <button type="button" class="btn btn-default" ng-click="prevPeriod()">&lt;&lt;</button>
-            <div class="btn-group">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                    {{current_period}}
-                    <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu">
-                    <li ng-repeat="p in periods"><a href="" ng-click="$parent.current_period=p;">{{p}}</a></li>
-
-                </ul>
-            </div>
-            <button type="button" class="btn btn-default" ng-click="nextPeriod()">&gt;&gt;</button>
-
-
-        </div>
+        
 
         <!-- Single button -->
-        <div class="btn-group" style="float:right;">
-            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                {{current_mcc}}    <span class="caret"></span>
-            </button>
-
-            <ul class="dropdown-menu">
-                <li ng-repeat="(mcc_code, mcc_name) in assignment.mccs"><a href="">{{mcc_name}}</a></li>
-            </ul>
-        </div>
+   
 
         <fieldset>
             <legend>

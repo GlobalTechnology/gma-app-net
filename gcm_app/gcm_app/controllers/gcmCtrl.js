@@ -4,8 +4,8 @@
   
     var onGetSession = function (data) {
         console.log(data);
-        if(data.status==='denied')
-            window.location = window.location.pathname;
+      //  if(data.status==='denied')
+      //      window.location = window.location.pathname;
 
         $scope.user.session_ticket = data.session_ticket;
         $scope.user.person = data.user;
@@ -23,13 +23,13 @@
 
     $scope.onError = function (response, code) {
         console.log(response);
-        if (code == 401)
-            window.location= window.location.pathname;
+       // if (code == 401)
+       //     window.location= window.location.pathname;
         $scope.error = response.reason;
     };
 
  
-
+    
     var onGetMinistries = function (response) {
 
         //if (response.length > 0) { $scope.new_assignment_nat_min = response[0].ministry_id };
@@ -51,6 +51,36 @@
 
 
     $scope.user = {};
+    $scope.periods = [];
+    var dt = new Date();
+
+    for (var i = 0; i < 12; i++) {
+
+        $scope.periods.push($filter('date')(new Date(dt), 'yyyy-MM'));
+
+        dt = new Date(dt).setMonth(new Date(dt).getMonth() - 1);
+
+    }
+    $scope.current_period = $scope.periods[0];
+    $scope.nextPeriod = function () {
+        for (var i = 0 ; i < $scope.periods.length; i++) {
+            if ($scope.periods[i] === $scope.current_period && i > 0) {
+                $scope.current_period = $scope.periods[i - 1];
+                break;
+            }
+        }
+
+    };
+
+    $scope.prevPeriod = function () {
+        for (var i = 0 ; i < $scope.periods.length; i++) {
+            if ($scope.periods[i] === $scope.current_period && i < $scope.periods.length - 1) {
+                $scope.current_period = $scope.periods[i + 1];
+                break;
+            }
+        }
+
+    };
 
     $scope.loadAssignment = function (assignment) {
        // assignment_service.getAssignment($scope.user.session_ticket, assignment.id)
@@ -63,7 +93,8 @@
         if (assignment.has_ds) $scope.assignment.mccs.ds = 'Digital Strategies';
 
         if (Object.keys($scope.assignment.mccs).length>1) $scope.assignment.mccs.all = 'All';
-        
+        $scope.current_mcc = $scope.assignment.mccs[Object.keys($scope.assignment.mccs)[0]];
+
         //refresh to get extra info
         //if (assignment.team_role === 'leader' || assignment.team_role === 'inherited_leader')
             ministry_service.getMinistry($scope.user.session_ticket, assignment.ministry_id).then($scope.onGetMinistry, $scope.onError);

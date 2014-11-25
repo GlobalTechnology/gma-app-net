@@ -9,6 +9,8 @@
     <link href="/Content/bootstrap-theme.css" rel="stylesheet" />
     <link href="Content/gcm.css" rel="stylesheet" />
     <link href="Content/spinner.css" rel="stylesheet" />
+
+     <link rel="stylesheet" type="text/css" href="http://angular-ui.github.com/ng-grid/css/ng-grid.css" />
     <script src="Scripts/jquery-2.1.1.js"></script>
     <script src="/Scripts/bootstrap.min.js"></script>
 
@@ -27,7 +29,7 @@
                   geodesic="'geodesic'" fit="true" static="true" draggable="false" editable="false" icons="'icons'"></polylines>--%>
 
             <asp:HiddenField ID="hf_proxyticket" runat="server" />
-             <asp:HiddenField  ID="hf_api_url" runat="server" />
+            <asp:HiddenField ID="hf_api_url" runat="server" />
         </div>
         <div ng-app="gcmApp" ng-controller="gcmCtrl">
             <%--     <div ng-repeat="marker in church_markers track by marker.id" >
@@ -40,16 +42,17 @@
         <li ng-repeat="a in a.sub_ministries" ng-include="'field_renderer.html'"></li>
     </ul>
             </script>
+
+
             <nav class="navbar navbar-inverse navbar-static-top">
                 <div class="container">
-                    <div class="navbar-header">
-                        <span class="ministry-title" ng-cloak>{{assignment.name}}</span>
 
-                    </div>
+
+                  
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav">
-                            <li class="dropdown">
-                                <a href="" class="dropdown-toggle" data-toggle="dropdown">change <span class="caret"></span></a>
+                            <li class="dropdown ">
+                                <a href="" class="dropdown-toggle  ministry-title" data-toggle="dropdown">{{assignment.name}} <span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
                                     <li><a href="">Global</a></li>
                                     <li class="divider"></li>
@@ -59,12 +62,42 @@
 
                                 </ul>
                             </li>
+                             <li class="dropdown">
+                                <a href="" class="dropdown-toggle" data-toggle="dropdown">
+                {{current_mcc}}<span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li  ng-repeat="(mcc_code, mcc_name) in assignment.mccs"><a href="">{{mcc_name}}</a></li>
+                                </ul>
+                            </li>
+                                
+
+                           <li>
+                                <a href="" ng-click="prevPeriod()">&lt;&lt;</a>
+                           </li>
+                            
+                            <li class="dropdown">
+                                <a href="" class="dropdown-toggle" data-toggle="dropdown"> {{current_period}} <span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    
+                                    <li ng-repeat="p in periods""><a href="" ng-click="$parent.current_period=p;">{{p}}</a></li>
+                                  
+
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="" ng-click="nextPeriod()">&gt;&gt;</a>
+                           </li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
                             <li><a href="">{{user.person.cas_username}}</a></li>
                             <li><a href="https://thekey.me/cas/logout">logout</a></li>
                         </ul>
                     </div>
+                  
+
+
+
+                    
                 </div>
 
             </nav>
@@ -75,8 +108,8 @@
                         <li class="active"><a href="#/map" data-target="#">Church</a></li>
                         <li><a href="#/training" data-target="#" ng-show="assignment.team_role === 'leader' || assignment.team_role === 'inherited_leader'">Training</a></li>
                         <li><a href="#/measurements" data-target="#">Measurements</a></li>
-                         <li><a href="#/stories" data-target="#">Stories</a></li>
-                         <li><a href="#/admin" data-target="#" ng-show="assignment.team_role === 'leader' || assignment.team_role === 'inherited_leader'">Admin</a></li>
+                        <li><a href="#/stories" data-target="#">Stories</a></li>
+                        <li><a href="#/admin" data-target="#" ng-show="assignment.team_role === 'leader' || assignment.team_role === 'inherited_leader'">Admin</a></li>
                     </ul>
 
                     <!-- Example row of columns -->
@@ -108,7 +141,7 @@
                     </div>
 
                 </div>
-            
+
 
                 <footer>
                     <p>&copy; CCCi 2014</p>
@@ -185,7 +218,11 @@
         <script src="gcm_app/services/token.js"></script>
         <script src="Scripts/angular-ui/ui-bootstrap.min.js"></script>
         <script src="Scripts/angular-ui/ui-bootstrap-tpls.min.js"></script>
-        <script src="Scripts/ng-grid.js"></script>
+      
+    <%--    <script src="Scripts/ng-grid.js"></script>--%>
+        <script type="text/javascript" src="https://rawgithub.com/angular-ui/ng-grid/v2.0.13/build/ng-grid.debug.js"></script>
+
+        
         <script src='//maps.googleapis.com/maps/api/js?sensor=false'></script>
         <script src="Scripts/lodash.min.js"></script>
 
