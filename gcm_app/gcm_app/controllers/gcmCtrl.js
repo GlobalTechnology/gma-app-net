@@ -81,7 +81,13 @@
         }
 
     };
+    $scope.$watch('current_mcc', function () {
+        angular.forEach($scope.assignment.mccs, function (name, mcc) {
+            if (name === $scope.current_mcc) $scope.assignment.mcc = mcc;
 
+        });
+       
+    });
     $scope.loadAssignment = function (assignment) {
        // assignment_service.getAssignment($scope.user.session_ticket, assignment.id)
         $scope.assignment = assignment;

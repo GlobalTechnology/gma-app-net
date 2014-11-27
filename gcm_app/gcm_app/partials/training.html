@@ -10,7 +10,7 @@
 
             <accordion close-others="false">
 
-                <accordion-group ng-repeat="training in assignment.trainings">
+                <accordion-group ng-repeat="training in assignment.trainings track by training.Id">
                     <accordion-heading>
                         <div>
                             <div class="col-lg-9">
@@ -48,7 +48,7 @@
 
                         <tbody>
 
-                            <tr ng-repeat="comp in training.gcm_training_completions">
+                            <tr ng-repeat="comp in training.gcm_training_completions track by comp.Id">
                                 <td>
                                     {{comp.phase}}
                                 </td>
@@ -156,12 +156,7 @@
                             <select id="ddlTrainingType" class="form-control" ng-model="newTraining.type" ng-options="s.value as s.text for s in training_types"></select>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="ddlMcc" class="col-sm-4 control-label">MCC</label>
-                        <div class="col-sm-8">
-                            <select id="ddlMcc" class="form-control" ng-model="newTraining.mcc" ng-options="k as v for (k, v) in assignment.mccs"></select>
-                        </div>
-                    </div>
+                  
                     <div class="form-group">
                         <label for="tbDate" class="col-sm-4 control-label">Date</label>
                         <div class="col-sm-8">

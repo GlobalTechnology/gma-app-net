@@ -26,12 +26,15 @@
             }
 
         });
-        $scope.$watch('current_mcc', function () {
-            angular.forEach($scope.assignment.mccs, function (name, mcc) {
-                if (name === $scope.current_mcc) $scope.assignment.mcc = mcc;
-
-            });
+        $scope.$watch('assignment.mcc', function () {
+           
+            if (typeof $scope.assignment !== 'undefined') {
+                if (typeof $scope.assignment.ministry_id !== 'undefined') {
+                    measurement_service.getMeasurements($scope.user.session_ticket, $scope.assignment.ministry_id, $scope.current_period, $scope.assignment.mcc).then($scope.onGetMeasurements, $scope.onError);
+                }
+            }
         });
+      
         $scope.$watch('current_period', function () {
             if (typeof $scope.assignment !== 'undefined') {
                 if (typeof $scope.assignment.ministry_id !== 'undefined') {
@@ -39,6 +42,16 @@
                 }
             }
         });
+
+        $scope.filterSource = function (items) {
+            var result = {};
+            angular.forEach(items, function (value, key) {
+                if (key!='gcmapp' && key!='total') {
+                    result[key] = value;
+                }
+            });
+            return result;
+        }
 
        
         $scope.onGetMeasurements = function (response) {
@@ -100,10 +113,10 @@
             var values = [
                 {
                     period: $scope.current_period,
-                    mcc: $scope.assignment.mcc,
+                    mcc: $scope.assignment.mcc + '_gcmapp',
                     measurement_type_id: $scope.edit_measurement.details.measurement_type_ids.local,
                     related_entity_id: $scope.assignment.ministry_id,
-                    value: $scope.edit_measurement.details.local[$scope.current_period]
+                    value: $scope.edit_measurement.details.local_breakdown.gcmapp
                 },
                 {
                     period: $scope.current_period,

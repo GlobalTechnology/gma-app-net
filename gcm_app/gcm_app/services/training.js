@@ -2,9 +2,10 @@
 
     var training_service = function ($http) {
 
-        var getTrainings = function (session_ticket, ministry_id, show_all, show_tree) {
-            this._apiResourceUrl = _api_url + "/training?token=" + session_ticket + "&ministry_id=" + ministry_id + "&show_all=" + show_all + "&show_tree=" + show_tree;
+        var getTrainings = function (session_ticket, ministry_id,mcc, show_all, show_tree) {
+            this._apiResourceUrl = _api_url + "/training?token=" + session_ticket + "&ministry_id=" + ministry_id + "&show_all=" + show_all + "&show_tree=" + show_tree + "&mcc=" + mcc;
             console.log(this._apiResourceUrl);
+         
             return $http.get(this._apiResourceUrl, { withCredentials: true })
                 .then(function (response) {
                     return response.data;

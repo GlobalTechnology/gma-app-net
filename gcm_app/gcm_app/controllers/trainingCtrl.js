@@ -59,10 +59,12 @@
             $scope.reloadTraining();
 
         });
-
+        $scope.$watch('assignment.mcc', function () {
+            $scope.reloadTraining();
+        });
         $scope.reloadTraining = function () {
             if ($scope.assignment) {
-                training_service.getTrainings($scope.user.session_ticket, $scope.assignment.ministry_id, $scope.show_all == "all", $scope.show_tree).then($scope.onGetTraining, $scope.onError);
+                training_service.getTrainings($scope.user.session_ticket, $scope.assignment.ministry_id, $scope.assignment.mcc, $scope.show_all == "all", $scope.show_tree).then($scope.onGetTraining, $scope.onError);
             }
         };
 
@@ -106,7 +108,7 @@
 
         };
         $scope.addTraining = function () {
-            angular.extend($scope.newTraining, { ministry_id: $scope.assignment.ministry_id });
+            angular.extend($scope.newTraining, { ministry_id: $scope.assignment.ministry_id, mcc: $scope.assignment.mcc });
             training_service.addTraining($scope.user.session_ticket, $scope.newTraining).then($scope.onAddTraining, $scope.onError);
             
         };
@@ -136,6 +138,7 @@
     app.controller("trainingController", ["$scope", "training_service", training_controller]);
     function getHighest(array) {
         var max = 0;
+        if (!array) return 0;
         for (var i = 0; i < array.length; i++) {
             if (array[i].phase > (max || 0))
                 max = array[i].phase;

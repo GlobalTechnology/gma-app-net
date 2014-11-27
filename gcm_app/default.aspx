@@ -66,7 +66,7 @@
                                 <a href="" class="dropdown-toggle" data-toggle="dropdown">
                 {{current_mcc}}<span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
-                                    <li  ng-repeat="(mcc_code, mcc_name) in assignment.mccs"><a href="">{{mcc_name}}</a></li>
+                                    <li  ng-repeat="(mcc_code, mcc_name) in assignment.mccs"><a href="" ng-click="$parent.current_mcc=mcc_name">{{mcc_name}}</a></li>
                                 </ul>
                             </li>
                                 

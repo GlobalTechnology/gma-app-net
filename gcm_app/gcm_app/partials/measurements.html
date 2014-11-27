@@ -213,17 +213,17 @@
                                 </th>
                             </tr>
                            
-                            <tr>
-                                <td class="meas_table_lbl">Churches</td>
+                            <tr ng-repeat="(key, value) in filterSource(edit_measurement.details.local_breakdown) ">
+                                <td class="meas_table_lbl">{{key}}</td>
                                 <td>
-                                    20
+                                    {{value}}
                                 </td>
                             </tr>
                            
                             <tr>
                                 <td class="meas_table_lbl">Local</td>
                                 <td>
-                                    <input id="tbLocal" type="number" class="form-control" placeholder="Local" ng-model="edit_measurement.details.local[current_period]" />
+                                    <input id="tbLocal" type="number" class="form-control" placeholder="Local" ng-model="edit_measurement.details.local_breakdown.gcmapp" />
                                 </td>
                             </tr>
                             <tr>
@@ -259,7 +259,7 @@
                             <tfoot>
                                 <tr>
                                     <td style="font-weight: bold; text-align: right;">TOTAL</td>
-                                    <td><label id="tbTotal">{{edit_measurement.details.total[current_period]}}</</label></td>
+                                    <td><label id="tbTotal">{{edit_measurement.details.total[current_period]}}</</label> </td>
                                 </tr>
                             </tfoot>
                         </table>
@@ -277,7 +277,7 @@
 
                             </div>
                         </fieldset>
-
+                       
                     </div>
 
                     <div class="modal-footer">
