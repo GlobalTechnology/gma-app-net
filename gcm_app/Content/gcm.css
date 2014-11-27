@@ -130,3 +130,14 @@
 .church-grid .ngViewport{
     overflow: inherit;
 }
+.btn-map-add{
+    height: 52px;
+   
+}
+.map-trained-count{
+    background-color: #4aff00;
+    padding: 2px;
+    color: black;
+    border: 1px solid black !important;
+    margin: 4px;
+}

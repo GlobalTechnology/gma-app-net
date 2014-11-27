@@ -117,6 +117,7 @@
     <Content Include="Content\map_icons\tiny\targeticon.png" />
     <Content Include="Content\map_icons\tiny\vision.png" />
     <Content Include="Content\map_icons\tiny\_notes\dwsync.xml" />
+    <Content Include="Content\map_icons\training.png" />
     <Content Include="Content\map_icons\up.png" />
     <Content Include="Content\map_icons\vision.png" />
     <Content Include="Content\map_icons\visiongrey.png" />

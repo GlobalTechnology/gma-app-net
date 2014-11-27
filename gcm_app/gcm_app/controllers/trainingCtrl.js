@@ -6,17 +6,9 @@
     var training_controller = function ($scope, training_service) {
         $scope.newTraining = {};
         $scope.deleteTraining = {};
-        $scope.show_all = "year";
-        $scope.show_tree = false;
+       
         $scope.deleteTrainingCompletion = {};
-        $scope.onGetTraining = function (response) {
-            $scope.assignment.trainings = response;
-            angular.forEach($scope.assignment.trainings, function (training) {
-                training.current_stage = getHighest(training.gcm_training_completions)+1;
-                training.editMode = false;
-            });
-
-        }
+       
         $scope.onSaveTraining = function (response) { };
         $scope.onSaveTrainingCompletion = function (response) { };
         $scope.onAddTrainingCompletion = function (response) {
@@ -62,11 +54,7 @@
         $scope.$watch('assignment.mcc', function () {
             $scope.reloadTraining();
         });
-        $scope.reloadTraining = function () {
-            if ($scope.assignment) {
-                training_service.getTrainings($scope.user.session_ticket, $scope.assignment.ministry_id, $scope.assignment.mcc, $scope.show_all == "all", $scope.show_tree).then($scope.onGetTraining, $scope.onError);
-            }
-        };
+        
 
         $scope.getTrainingTotal = function (t) {
             var rtn = 0;
@@ -80,12 +68,7 @@
             return rtn;
         };
 
-        $scope.training_types = [
-   { value: "MC2", text: 'MC2' },
-   { value: "T4T", text: 'T4T' },
-   { value: "CPMI", text: 'CPMI' },
-   { value: "", text: 'Other' }
-        ];
+       
 
         $scope.saveTraining = function (data) {
             training_service.updateTraining($scope.user.session_ticket, data).then($scope.onSaveTraining, $scope.onError);
@@ -136,23 +119,5 @@
     };
 
     app.controller("trainingController", ["$scope", "training_service", training_controller]);
-    function getHighest(array) {
-        var max = 0;
-        if (!array) return 0;
-        for (var i = 0; i < array.length; i++) {
-            if (array[i].phase > (max || 0))
-                max = array[i].phase;
-        }
-       
-        return max;
-    }
-    function getHighestCount(array) {
-        var max = 0;
-        for (var i = 0; i < array.length; i++) {
-            if (array[i].number_completed > (max || 0))
-                max = array[i].number_completed;
-        }
-       
-        return max;
-    }
+    
 }());

@@ -1,6 +1,8 @@
-﻿app.controller("gcmCtrl", function ($scope, $http, $timeout,$filter, token, ministry_service, assignment_service, church_service) {
+﻿app.controller("gcmCtrl", function ($scope, $http, $timeout,$filter, token, ministry_service, assignment_service, church_service, training_service) {
     $scope.is_loaded = false;
     $scope.has_assignment = true;
+    $scope.show_all = "year";
+    $scope.show_tree = false;
     var orderBy = $filter('orderBy');
   
     var onGetSession = function (data) {
@@ -76,7 +78,12 @@
         }
 
     };
-
+    $scope.training_types = [
+  { value: "MC2", text: 'MC2' },
+  { value: "T4T", text: 'T4T' },
+  { value: "CPMI", text: 'CPMI' },
+  { value: "", text: 'Other' }
+    ];
     $scope.prevPeriod = function () {
         for (var i = 0 ; i < $scope.periods.length; i++) {
             if ($scope.periods[i] === $scope.current_period && i < $scope.periods.length - 1) {
@@ -106,7 +113,8 @@
 
         if (Object.keys($scope.assignment.mccs).length>1) $scope.assignment.mccs.all = 'All';
         $scope.current_mcc = $scope.assignment.mccs[Object.keys($scope.assignment.mccs)[0]];
-
+        assignment.mcc = Object.keys($scope.assignment.mccs)[0];
+        $scope.reloadTraining();
         //refresh to get extra info
         //if (assignment.team_role === 'leader' || assignment.team_role === 'inherited_leader')
             ministry_service.getMinistry($scope.user.session_ticket, assignment.ministry_id).then($scope.onGetMinistry, $scope.onError);
@@ -154,8 +162,44 @@
       
     };
 
+    $scope.reloadTraining = function () {
+        if ($scope.assignment) {
+            training_service.getTrainings($scope.user.session_ticket, $scope.assignment.ministry_id, $scope.assignment.mcc, $scope.show_all == "all", $scope.show_tree).then($scope.onGetTraining, $scope.onError);
+        }
+    };
+
+    $scope.onGetTraining = function (response) {
+
+        angular.forEach(response, function (training) {
+            training.current_stage = getHighest(training.gcm_training_completions) + 1;
+            training.leaders_trained = getHighestCount(training.gcm_training_completions);
+            training.editMode = false;
+        });
+        $scope.assignment.trainings = response;
+        
+        
+    }
     
 
     
 });
 
+function getHighest(array) {
+    var max = 0;
+    if (!array) return 0;
+    for (var i = 0; i < array.length; i++) {
+        if (array[i].phase > (max || 0))
+            max = array[i].phase;
+    }
+
+    return max;
+}
+function getHighestCount(array) {
+    var max = 0;
+    for (var i = 0; i < array.length; i++) {
+        if (array[i].number_completed > (max || 0))
+            max = array[i].number_completed;
+    }
+
+    return max;
+}
