@@ -6,7 +6,7 @@
     var orderBy = $filter('orderBy');
   
     var onGetSession = function (data) {
-        console.log(data);
+        
       //  if(data.status==='denied')
       //      window.location = window.location.pathname;
 
@@ -51,7 +51,7 @@
     
     $scope.onGetMinistry = function (response) {
         //check assignment_id has not changed
-        console.log(response);
+       
         if(response.ministry_id=== $scope.assignment.ministry_id)
         {
             $scope.assignment.team_members = response.team_members;
@@ -185,7 +185,35 @@
     }
     
 
-    
+    $scope.addTrainingStage = function (training) {
+        var newPhase = {
+            phase: training.current_stage,
+            date: training.insert.date,
+            number_completed: training.insert.number_completed,
+            training_id: training.Id
+
+        };
+        training_service.addTrainingCompletion($scope.user.session_ticket, newPhase).then($scope.onAddTrainingCompletion, $scope.onError);
+
+        training.insert.date = "";
+        training.insert.number_completed = 0;
+
+    };
+    $scope.onAddTrainingCompletion = function (response) {
+        response.editMode = false;
+
+        angular.forEach($scope.assignment.trainings, function (training) {
+            if (training.Id == response.training_id) {
+                training.gcm_training_completions.push(response);
+                training.current_stage = response.phase + 1;
+            }
+        });
+
+
+    };
+    $scope.saveTrainingCompletion = function (data) {
+        training_service.updateTrainingCompletion($scope.user.session_ticket, data).then($scope.onSaveTrainingCompletion, $scope.onError);
+    };
 });
 
 function getHighest(array) {

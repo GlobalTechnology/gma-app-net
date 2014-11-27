@@ -78,6 +78,10 @@
     min-width: 300px;
     /*height: 150px;*/
 }
+.training-window {
+    min-width: 400px;
+    /*height: 150px;*/
+}
 .gm-style-iw div{
     display: inline;
 }
@@ -140,4 +144,12 @@
     color: black;
     border: 1px solid black !important;
     margin: 4px;
+}
+.map-training-date{
+    width: 130px;
+    line-height: inherit !important;
+}
+.map-training-number{
+    width: 60px;
+    line-height: inherit !important;
 }

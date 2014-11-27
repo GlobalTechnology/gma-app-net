@@ -17,13 +17,16 @@
         $scope.edit_measurement = {};
 
         $scope.$watch('assignment.ministry_id', function (a) {
-            if (typeof $scope.assignment.ministry_id !== 'undefined') {
-                $scope.current_mcc = $scope.assignment.mccs[Object.keys($scope.assignment.mccs)[0]];
+            if ($scope.assignment) {
+                if (typeof $scope.assignment.ministry_id !== 'undefined') {
+                    $scope.current_mcc = $scope.assignment.mccs[Object.keys($scope.assignment.mccs)[0]];
 
-                measurement_service.getMeasurements($scope.user.session_ticket, $scope.assignment.ministry_id, $scope.current_period, Object.keys($scope.assignment.mccs)[0]).then($scope.onGetMeasurements, $scope.onError);
+                    measurement_service.getMeasurements($scope.user.session_ticket, $scope.assignment.ministry_id, $scope.current_period, Object.keys($scope.assignment.mccs)[0]).then($scope.onGetMeasurements, $scope.onError);
 
 
+                }
             }
+        
 
         });
         $scope.$watch('assignment.mcc', function () {
@@ -55,7 +58,8 @@
 
        
         $scope.onGetMeasurements = function (response) {
-            console.log(response);
+          
+
             $scope.assignment.measurements = response;
             $scope.$parent.is_loaded = true;
         };

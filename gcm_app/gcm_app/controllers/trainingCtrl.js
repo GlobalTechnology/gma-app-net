@@ -8,21 +8,8 @@
         $scope.deleteTraining = {};
        
         $scope.deleteTrainingCompletion = {};
-       
-        $scope.onSaveTraining = function (response) { };
-        $scope.onSaveTrainingCompletion = function (response) { };
-        $scope.onAddTrainingCompletion = function (response) {
-            response.editMode = false;
-
-            angular.forEach($scope.assignment.trainings, function (training) {
-                if(training.Id== response.training_id){
-                    training.gcm_training_completions.push(response);
-                    training.current_stage = response.phase + 1;
-                }
-            });
-            
-
-        };
+     
+     
         $scope.onAddTraining = function (response) {
             response.current_stage = getHighest(response.gcm_training_completions) + 1;
             response.editMode = false;
@@ -73,23 +60,8 @@
         $scope.saveTraining = function (data) {
             training_service.updateTraining($scope.user.session_ticket, data).then($scope.onSaveTraining, $scope.onError);
         };
-        $scope.saveTrainingCompletion = function (data) {
-            training_service.updateTrainingCompletion($scope.user.session_ticket, data).then($scope.onSaveTrainingCompletion, $scope.onError);
-        };
-        $scope.addTrainingStage = function (training) {
-            var newPhase= {
-                phase: training.current_stage,
-                date: training.insert.date,
-                number_completed: training.insert.number_completed,
-                training_id: training.Id
-                
-            };
-            training_service.addTrainingCompletion($scope.user.session_ticket, newPhase ).then($scope.onAddTrainingCompletion, $scope.onError);
-           
-            training.insert.date = "";
-            training.insert.number_completed = 0;
-
-        };
+       
+      
         $scope.addTraining = function () {
             angular.extend($scope.newTraining, { ministry_id: $scope.assignment.ministry_id, mcc: $scope.assignment.mcc });
             training_service.addTraining($scope.user.session_ticket, $scope.newTraining).then($scope.onAddTraining, $scope.onError);

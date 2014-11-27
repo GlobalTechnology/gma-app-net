@@ -20,7 +20,7 @@
     <div class="map_legend_header" ng-click="show_legend = !show_legend">
         <span>LEGEND<img class="showMoreArrow" src="/Content/map_icons/{{show_legend ? 'up' : 'down'}}.png" style="padding-left:10px"></span>
     </div>
-    <table class="map_legend" ng-show="show_legend" ng-insit="show_legend=true">
+    <table class="map_legend" ng-show="show_legend" ng-init="show_legend=true" ng-show="is_loaded">
 
         <tbody>
             <tr>

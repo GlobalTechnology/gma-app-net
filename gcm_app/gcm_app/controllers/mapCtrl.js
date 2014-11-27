@@ -48,7 +48,7 @@
             $scope.churchWindow.setOptions({ maxWidth: 300 });
             $scope.trainingWindow = new google.maps.InfoWindow();
             $scope.trainingWindowContent = $compile('<div id="training_window_content" ng-include src="\'/gcm_app/partials/edit_training.html\'"></div>')($scope)
-            $scope.trainingWindow.setOptions({ maxWidth: 300 });
+            $scope.trainingWindow.setOptions({ maxWidth: 400 });
 
             $scope.newChurchWindow = new google.maps.InfoWindow();
             google.maps.event.addListener($scope.newChurchWindow, 'closeclick', function () {
@@ -94,7 +94,17 @@
             $scope.map.controls[google.maps.ControlPosition.TOP_RIGHT].push($scope.map.side);
             $scope.map.controls[google.maps.ControlPosition.TOP_LEFT].push($scope.map.search);
             if($scope.assignment)$scope.load_training_markers();
+            $scope.$watch('assignment', function (a) {
 
+                if (a && a.hasOwnProperty('location')) {
+                    $scope.map.setCenter(new google.maps.LatLng(a.location.latitude, a.location.longitude));
+
+                }
+                if (a && a.hasOwnProperty('location_zoom')) {
+                    $scope.map.setZoom(parseInt(a.location_zoom));
+                }
+
+            }, true);
         }
 
 
@@ -154,17 +164,7 @@
         });
 
 
-        $scope.$watch('assignment', function (a) {
-
-            if (a && a.hasOwnProperty('location')) {
-                $scope.map.setCenter(new google.maps.LatLng(a.location.latitude, a.location.longitude));
-
-            }
-            if (a && a.hasOwnProperty('location_zoom')) {
-                $scope.map.setZoom(parseInt(a.location_zoom));
-            }
-
-        }, true);
+      
 
 
         $scope.onAddChurch = function (response) {
@@ -394,8 +394,7 @@
                     if ($scope.map.markers.filter(function (c) { return c.id === 't' + training.Id }).length == 0) {
                         if (training.longitude) {
                             var marker = {};
-                            console.log(training.name);
-
+                            
 
 
                             marker = new MarkerWithLabel({
@@ -423,7 +422,7 @@
 
                                     $scope.$apply();
                                     $scope.trainingWindow.close();
-                                    $scope.trainingWindow.setOptions({ maxWidth: 300 });
+                                    $scope.trainingWindow.setOptions({ maxWidth: 400 });
                                     $scope.trainingWindow.open($scope.map, marker);
 
                                     // $scope.churchWindow.open($scope.map, marker);
@@ -491,10 +490,7 @@
                 removedObject = null;
             });
 
-            console.log('response:  ' + response.length);
-            console.log('markers:  ' + $scope.map.markers.length);
-
-
+           
 
             angular.forEach($scope.churches, function (church) {
                 if ($scope.map.markers.filter(function (c) { return c.id == church.id }).length == 0) {
@@ -644,8 +640,7 @@
 
 
 
-            console.log('markers: ' + $scope.map.markers.length);
-
+        
 
         };
 
