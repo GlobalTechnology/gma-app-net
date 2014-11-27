@@ -50,12 +50,14 @@
 
                   
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                        <ul class="nav navbar-nav">
+                        <span class="ministry-title" ng-hide="has_assignment">GCM APP</span>
+                        <ul class="nav navbar-nav" ng-show="has_assignment">
+                             
                             <li class="dropdown ">
+
                                 <a href="" class="dropdown-toggle  ministry-title" data-toggle="dropdown">{{assignment.name}} <span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
-                                    <li><a href="">Global</a></li>
-                                    <li class="divider"></li>
+                                    
                                     <li ng-repeat="a in assignments" ng-include="'field_renderer.html'"></li>
                                     <li class="divider"></li>
                                     <li><a href="" data-toggle="modal" data-target="#newAssignment">Add another location / ministry</a></li>
@@ -103,7 +105,8 @@
             </nav>
             <div class="container">
 
-                <div>
+                <div  ng-show="has_assignment">
+
                     <ul class="nav nav-tabs" role="tablist" id="myTab" class="map-ministries">
                         <li class="active"><a href="#/map" data-target="#">Church</a></li>
                         <li><a href="#/training" data-target="#" ng-show="assignment.team_role === 'leader' || assignment.team_role === 'inherited_leader'">Training</a></li>

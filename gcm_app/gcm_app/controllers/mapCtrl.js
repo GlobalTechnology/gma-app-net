@@ -97,9 +97,10 @@
                 if (!$scope.show_group) extras += '&hide_group=true';
                 if (!$scope.show_church) extras += '&hide_church=true';
                 if (!$scope.show_mult_church) extras += '&hide_mult_church=true';
-                if ($scope.map_filter === 'min_only') extras += '&ministry_id=' + $scope.assignment.ministry_id;
-                else if ($scope.map_filter === 'tree') extras += '&ministry_id=' + $scope.assignment.ministry_id + '&show_tree=true';
-
+                if ($scope.assignment) {
+                    if ($scope.map_filter === 'min_only') extras += '&ministry_id=' + $scope.assignment.ministry_id;
+                    else if ($scope.map_filter === 'tree') extras += '&ministry_id=' + $scope.assignment.ministry_id + '&show_tree=true';
+                }
 
 
 
@@ -295,17 +296,17 @@
                     repeat: '25px'
                 }]
             });
-          $scope.move_event=  google.maps.event.addListener($scope.map, 'mousemove', function (e) {
-  
+            $scope.move_event = google.maps.event.addListener($scope.map, 'mousemove', function (e) {
 
-              $scope.new_parentLine.setPath([e.latLng, new google.maps.LatLng($scope.edit_church.latitude, $scope.edit_church.longitude)]);
-               
+
+                $scope.new_parentLine.setPath([e.latLng, new google.maps.LatLng($scope.edit_church.latitude, $scope.edit_church.longitude)]);
+
             });
-           
 
 
-          $scope.new_parentLine.setMap($scope.map);
-         //   $scope.map.church_lines.push(parentLine);
+
+            $scope.new_parentLine.setMap($scope.map);
+            //   $scope.map.church_lines.push(parentLine);
 
 
         }
@@ -369,7 +370,7 @@
                 if ($scope.map.markers.filter(function (c) { return c.id == church.id }).length == 0) {
                     var marker = {};
 
-                    
+
 
                     if (church.cluster_count == 1) {
                         var churchIconToUse = {}
@@ -423,19 +424,19 @@
                                 if (church.cluster_count == 1 && church.id !== $scope.edit_church.id) {
                                     google.maps.event.removeListener($scope.move_event);
                                     $scope.SetParentMode = false;
-                                    $scope.new_parentLine.setPath([ new google.maps.LatLng(church.latitude, church.longitude), new google.maps.LatLng($scope.edit_church.latitude, $scope.edit_church.longitude)]);
+                                    $scope.new_parentLine.setPath([new google.maps.LatLng(church.latitude, church.longitude), new google.maps.LatLng($scope.edit_church.latitude, $scope.edit_church.longitude)]);
                                     //update church's parent
                                     var new_church = {};
                                     new_church.id = $scope.edit_church.id;
-                                    new_church.parent_id=church.id;
+                                    new_church.parent_id = church.id;
                                     $scope.edit_church.parent_id = church.id;
                                     console.log(new_church);
                                     church_service.saveChurch($scope.user.session_ticket, new_church).then($scope.onSaveChurch, $scope.onError);
 
 
                                 }
-                                
-                                    return;
+
+                                return;
 
                             }
                             //google.maps.event.addListener(marker, 'click', function () {
@@ -470,7 +471,7 @@
                                 church.latitude = new_church.latitude;
                                 church.longitude = new_church.longitude;
                                 church_service.saveChurch($scope.user.session_ticket, new_church).then($scope.onSaveChurch, $scope.onError);
-                               
+
                                 marker.setAnimation(null);
                                 marker.setDraggable(false);
                             }

@@ -1,5 +1,6 @@
 ﻿app.controller("gcmCtrl", function ($scope, $http, $timeout,$filter, token, ministry_service, assignment_service, church_service) {
     $scope.is_loaded = false;
+    $scope.has_assignment = true;
     var orderBy = $filter('orderBy');
   
     var onGetSession = function (data) {
@@ -13,8 +14,12 @@
        
         ministry_service.getMinistries($scope.user.session_ticket).then(onGetMinistries, $scope.onError);
 
-        if ($scope.assignments.length > 0) $scope.loadAssignment($scope.assignments[0]);
-
+        if ($scope.assignments) $scope.loadAssignment($scope.assignments[0]);
+        else {
+            $('#newAssignment').modal('show');
+            $scope.is_loaded = false;
+            $scope.has_assignment = false;
+        }
 
 
        // assignment_service.getAssignments($scope.user.session_ticket).then(onGetAssignments, $scope.onError);
@@ -82,16 +87,17 @@
 
     };
     $scope.$watch('current_mcc', function () {
-        angular.forEach($scope.assignment.mccs, function (name, mcc) {
-            if (name === $scope.current_mcc) $scope.assignment.mcc = mcc;
+        if ($scope.assignment) {
+            angular.forEach($scope.assignment.mccs, function (name, mcc) {
+                if (name === $scope.current_mcc) $scope.assignment.mcc = mcc;
 
-        });
-       
+            });
+        }
     });
     $scope.loadAssignment = function (assignment) {
        // assignment_service.getAssignment($scope.user.session_ticket, assignment.id)
         $scope.assignment = assignment;
-        
+        $scope.has_assignment = true;
         $scope.assignment.mccs = {};
         if (assignment.has_slm) $scope.assignment.mccs.slm = 'Student Led';
         if (assignment.has_gcm) $scope.assignment.mccs.gcm='Global Church Movements';
