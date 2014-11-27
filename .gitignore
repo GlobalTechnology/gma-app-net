@@ -48,3 +48,4 @@ gcm_app/Web.Release.config
 packages/
 gcm_app/Scripts/i18n/
 gcm_app/obj/
+gcm_app/bin/

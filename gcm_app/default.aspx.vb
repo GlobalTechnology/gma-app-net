@@ -65,7 +65,9 @@ Public Class _default
         'Check for success
         Dim serviceResponse As XmlNode = doc.SelectSingleNode("/cas:serviceResponse/cas:authenticationFailure", namespaceMgr)
         If Not serviceResponse Is Nothing Then
-            Response.Write("Error: " & serviceResponse.InnerText)
+            Response.Redirect("https://thekey.me/cas/login.htm?service=" & _service)
+
+            'Response.Write("Error: " & serviceResponse.InnerText)
             Return
         End If
 
