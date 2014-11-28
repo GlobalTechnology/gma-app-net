@@ -28,7 +28,7 @@
                         <option value="1">Target</option>
                         <option value="2">Group</option>
                         <option value="3">Church</option>
-                        <option value="4">Multiplying Church</option>
+                        <option value="5">Multiplying Church</option>
 
                     </select>
 
@@ -41,7 +41,20 @@
 
                 </td>
             </tr>
-            <tr>
+            <tr ng-show="edit_church.editable">
+                <td><b>Security:</b> </td>
+                <td>
+                    <select ng-model="edit_church.security" ng-disabled="!edit_church.editable">
+                        <option value="0">This Ministry Only</option>
+                        <option value="1">This Ministry and above</option>
+                        <option value="3">All Registred Users</option>
+                        <option value="4">Everyone</option>
+
+                    </select>
+
+                </td>
+            </tr>
+            <!--<tr>
                 <td><b>Language:</b> </td>
                 <td>
                     <input type="text" ng-show="edit_church.editable" ng-model='edit_church.language' />
@@ -55,7 +68,7 @@
                     <input type="text" ng-show="edit_church.editable" ng-model='edit_church.people_group' />
                     <label ng-hide="edit_church.editable">{{people_group}}</label>
                 </td>
-            </tr>
+            </tr>-->
         </table>
         <div class="center-block">
             <button type="button" class="btn btn-default btn-sm col-sm-4" ng-click="SaveChurch()">

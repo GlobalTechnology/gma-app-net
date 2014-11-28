@@ -45,7 +45,19 @@
 
                 </td>
             </tr>
+            <tr>
+                <td><b>Security:</b> </td>
+                <td>
+                    <select ng-model="new_church.security">
+                        <option value="0">This Ministry Only</option>
+                        <option value="1">This Ministry and above</option>
+                        <option value="2" >All Registred Users</option>
+                        <option value="3">Everyone</option>
 
+                    </select>
+
+                </td>
+            </tr>
         </table>
         <button class="btn btn-primary" type="button" ng-click="addChurch()">Add</button>
         <button class="btn" type="button" ng-click=" cancelAddChurch()">Cancel</button>

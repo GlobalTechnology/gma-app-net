@@ -111,15 +111,14 @@
         $scope.loadChurches = function () {
             console.log('loading churches');
             if (typeof $scope.user.session_ticket !== 'undefined') {
-                var extras = '';
+                var extras = '&ministry_id=' + $scope.assignment.ministry_id;
                 if (!$scope.show_target_point) extras += '&hide_target_point=true';
                 if (!$scope.show_group) extras += '&hide_group=true';
                 if (!$scope.show_church) extras += '&hide_church=true';
                 if (!$scope.show_mult_church) extras += '&hide_mult_church=true';
-                if ($scope.assignment) {
-                    if ($scope.map_filter === 'min_only') extras += '&ministry_id=' + $scope.assignment.ministry_id;
-                    else if ($scope.map_filter === 'tree') extras += '&ministry_id=' + $scope.assignment.ministry_id + '&show_tree=true';
-                }
+                if ($scope.map_filter === 'everything') extras += '&show_all=true';
+                else if ($scope.map_filter === 'tree') extras += '&show_tree=true';
+              
 
 
 
@@ -279,7 +278,7 @@
         $scope.onAddIcon = function () {
 
             if ($scope.map.markers.filter(function (c) { return c.id < 0 }).length == 0) {
-                $scope.new_church = {};
+                $scope.new_church = {security: 2};
 
                 marker = new MarkerWithLabel({
                     position: $scope.map.getCenter(),
