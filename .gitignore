@@ -49,3 +49,6 @@ packages/
 gcm_app/Scripts/i18n/
 gcm_app/obj/
 gcm_app/bin/
+gcm_app/bin/gcm_app.pdb
+gcm_app/bin/gcm_app.XmlSerializers.dll
+gcm_app/bin/gcm_app.dll

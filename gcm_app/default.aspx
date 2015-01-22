@@ -32,6 +32,8 @@
             <asp:HiddenField ID="hf_api_url" runat="server" />
         </div>
         <div ng-app="gcmApp" ng-controller="gcmCtrl">
+
+            {{assignment.id}}
             <%--     <div ng-repeat="marker in church_markers track by marker.id" >
                  {{marker.id}}    {{marker.coords.longitude}}
                                        </div>--%>
