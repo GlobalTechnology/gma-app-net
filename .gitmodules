@@ -1,0 +1,3 @@
+[submodule "gcm_app/gcm_app"]
+	path = gcm_app/gcm_app
+	url = git@github.com:GlobalTechnology/gcm_angular.git
