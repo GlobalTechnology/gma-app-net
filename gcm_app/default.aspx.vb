@@ -5,13 +5,14 @@ Imports System.Web.Configuration.WebConfigurationManager
 Public Class _default
     Inherits System.Web.UI.Page
     Private Const Cashost As String = "https://thekey.me/cas/"
-    Dim _service As String = ""
+    Public _service As String = ""
     ' Dim target_service = "http://localhost:52195/api/measurements/token"
     ' Dim target_service = "https://stage.sbr.global-registry.org/api/measurements/token"
     Dim target_service = AppSettings("service_api") & "/token"
 
+    Public st = ""
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-        hf_api_url.value = AppSettings("service_api")
+        'hf_api_url.value = AppSettings("service_api")
         If Not String.IsNullOrEmpty(Session("pgt")) Then
 
             Dim validateurl As String = Cashost + "proxy?targetService=" & target_service & "&pgt=" & CStr(Session("pgt")).Trim().ToString()
@@ -23,7 +24,7 @@ Public Class _default
             'Check for success
             Dim successNode = doc.SelectSingleNode("/cas:serviceResponse/cas:proxySuccess", namespaceMgr)
             If Not successNode Is Nothing Then
-                hf_proxyticket.Value = successNode.InnerText
+                st = successNode.InnerText
 
                 Return
 
@@ -123,7 +124,7 @@ Public Class _default
                     'Check for success
                     successNode = doc.SelectSingleNode("/cas:serviceResponse/cas:proxySuccess", namespaceMgr)
                     If Not successNode Is Nothing Then
-                        hf_proxyticket.Value = successNode.InnerText
+                        st = successNode.InnerText
                       
 
 

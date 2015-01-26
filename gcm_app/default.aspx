@@ -12,11 +12,11 @@
     <link href="gcm_app/vendor/ng-grid/ng-grid.css" rel="stylesheet" />
     <link href="gcm_app/css/gcm.css" rel="stylesheet" />
 
-    <script type="application/javascript" src="gcm_app/vendor/jquery/jquery.js"></script>
+    <script type="application/javascript" src="gcm_app/vendor/jquery/dist/jquery.js"></script>
     <script type="application/javascript">
         var GCM_APP = window.GCM_APP = {
-            ticket: <%= TICKET_VARIABLE_NAME %>, // CAS Service Ticket
-            api_url: <%= API_URL %>, // API Url
+            ticket: '<%= st%>', // CAS Service Ticket
+            api_url: '<%= System.Web.Configuration.WebConfigurationManager.AppSettings("service_api")%>', // API Url
             app_url: '/gcm_app' // Path to Angular app
         };
     </script>
@@ -35,7 +35,7 @@
         <script type="application/javascript" src="gcm_app/vendor/angular-route/angular-route.js"></script>
         <script type="application/javascript" src="gcm_app/vendor/angular-bootstrap/ui-bootstrap.js"></script>
         <script type="application/javascript" src="gcm_app/vendor/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-        <script type="application/javascript" src="gcm_app/vendor/ng-grid/ng-grid.css"></script>
+        <script type="application/javascript" src="gcm_app/vendor/ng-grid/ng-grid-2.0.14.min.js"></script>
         <script type="application/javascript" src="gcm_app/vendor/easy-markerwithlabel/src/markerwithlabel.js"></script>
         <script type="application/javascript" src="gcm_app/js/gcmApp.js"></script>
 
