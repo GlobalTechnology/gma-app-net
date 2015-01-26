@@ -42,6 +42,9 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
+# IntelliJ
+.idea/
+
 gcm_app/Web.config
 gcm_app/Web.Debug.config
 gcm_app/Web.Release.config
