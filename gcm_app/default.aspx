@@ -16,7 +16,9 @@
         var GCM_APP = window.GCM_APP = {
             ticket: '<%= st%>', // CAS Service Ticket
             api_url: '<%= System.Web.Configuration.WebConfigurationManager.AppSettings("service_api")%>', // API Url
-            app_url: '/gcm_app' // Path to Angular app
+            app_url: '/gcm_app', // Path to Angular app
+            refresh_url: '/refresh.aspx', // endpoint to refresh cas ticket (GET)
+            cas_logout: 'https://thekey.me/cas/logout'  // logout url
         };
     </script>
 </head>

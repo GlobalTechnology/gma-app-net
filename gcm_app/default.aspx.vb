@@ -4,7 +4,7 @@ Imports System.Net
 Imports System.Web.Configuration.WebConfigurationManager
 Public Class _default
     Inherits System.Web.UI.Page
-    Private Const Cashost As String = "https://thekey.me/cas/"
+    Public Const Cashost As String = "https://thekey.me/cas/"
     Public _service As String = ""
     ' Dim target_service = "http://localhost:52195/api/measurements/token"
     ' Dim target_service = "https://stage.sbr.global-registry.org/api/measurements/token"
@@ -12,6 +12,7 @@ Public Class _default
 
     Public st = ""
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        Session("pgt") = Nothing
         'hf_api_url.value = AppSettings("service_api")
         If Not String.IsNullOrEmpty(Session("pgt")) Then
 
@@ -27,7 +28,13 @@ Public Class _default
                 st = successNode.InnerText
 
                 Return
+            Else
+                Session("pgt") = Nothing
+                Response.Redirect("https://thekey.me/cas/login.htm?service=" & _service)
 
+
+
+                Return
             End If
 
 
@@ -66,12 +73,23 @@ Public Class _default
         'Check for success
         Dim serviceResponse As XmlNode = doc.SelectSingleNode("/cas:serviceResponse/cas:authenticationFailure", namespaceMgr)
         If Not serviceResponse Is Nothing Then
+            If String.IsNullOrEmpty(Session("cas_attmepts")) Then
+                Session("cas_attmepts") = 0
+                Response.Redirect("https://thekey.me/cas/login.htm?service=" & _service)
+            ElseIf Session("cas_attmepts") < 3 Then
+                Session("cas_attmepts") = CInt(Session("cas_attmepts")) + 1
+                Response.Redirect("https://thekey.me/cas/login.htm?service=" & _service)
+            Else
+
+                Response.Write("Error: " & serviceResponse.InnerText)
+            End If
+
             '   Response.Redirect("https://thekey.me/cas/login.htm?service=" & _service)
 
-            Response.Write("Error: " & serviceResponse.InnerText)
+
             Return
         End If
-
+        Session("cas_attmepts") = 0
         Dim successNode As XmlNode = doc.SelectSingleNode("/cas:serviceResponse/cas:authenticationSuccess", namespaceMgr)
 
         If Not successNode Is Nothing Then 'User Is authenticated
@@ -107,7 +125,7 @@ Public Class _default
 
                 Response.Write("There was an error during login.")
             Else
-                
+
 
                 '    lblUsername.Text = netid
                 Dim getPGT As New theKeyProxyTicket.PGTCallBack
@@ -125,7 +143,7 @@ Public Class _default
                     successNode = doc.SelectSingleNode("/cas:serviceResponse/cas:proxySuccess", namespaceMgr)
                     If Not successNode Is Nothing Then
                         st = successNode.InnerText
-                      
+
 
 
                     End If

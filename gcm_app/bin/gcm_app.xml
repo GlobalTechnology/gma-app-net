@@ -6,7 +6,7 @@ gcm_app
 </name>
 </assembly>
 <members>
-<member name="F:gcm_app._default.form1">
+<member name="F:gcm_app.refresh.form1">
 	<summary>
 form1 control.
 </summary>
@@ -14,17 +14,9 @@ form1 control.
 Auto-generated field.
 To modify move field declaration from designer file to code-behind file.
 </remarks>
-</member><member name="F:gcm_app._default.hf_proxyticket">
+</member><member name="F:gcm_app._default.form1">
 	<summary>
-hf_proxyticket control.
-</summary>
-	<remarks>
-Auto-generated field.
-To modify move field declaration from designer file to code-behind file.
-</remarks>
-</member><member name="F:gcm_app._default.hf_api_url">
-	<summary>
-hf_api_url control.
+form1 control.
 </summary>
 	<remarks>
 Auto-generated field.
